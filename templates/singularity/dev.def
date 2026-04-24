@@ -1,0 +1,102 @@
+Bootstrap: docker
+From: pytorch/pytorch:2.3.1-cuda11.8-cudnn8-devel
+
+%help
+    # $0
+    Help message here.
+
+%files
+    ./.singularity/modules /opt/
+
+%labels
+    source ${SINGULARITY_ROOTFS}/opt/modules/labels/labels.sh
+
+%setup
+    cp -r ./.singularity/modules ${SINGULARITY_ROOTFS}/opt/
+    source ${SINGULARITY_ROOTFS}/opt/modules/setup/mk-bind-dirs.sh
+
+
+%post -c /bin/bash
+    # After the OS has been installed, being executed by root
+    if-os () {
+        # Example usage
+        # if-os ubuntu echo "This is Ubuntu"
+        # if-os centos echo "This is CentOS"
+
+        OS_KEY_WORD=$1
+        shift
+        COMMAND='"$@"'
+
+        # Read the ID line directly from /etc/os-release to determine the OS type
+        OS_TYPE=$(grep '^ID=' /etc/os-release | cut -d'=' -f2 | tr -d '"')
+
+        # Check if the OS type matches the keyword, execute command if it does
+        if [[ $OS_TYPE == *"$OS_KEY_WORD"* ]]; then
+            eval "$COMMAND"
+        fi
+    }
+
+    # Switching package manager
+    if-os "ubuntu" export pkgm="apt"
+    if-os "centos" export pkgm="dnf"
+    if-os "rocky" export pkgm="dnf"
+
+    echo "##########"
+    echo $pkgm
+    echo "##########"
+
+    # Environment
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/system/LD_LIBRARY_PATH.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/system/HOSTNAME.sh
+
+    # Locale
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/system/LOCALE-dnf.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/system/LOCALE-apt.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/system/LOCALE-"$pkgm".sh
+
+    # Packages
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/packages/dnf-packages.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/packages/apt-packages.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/packages/"$pkgm"-packages.sh
+
+    # Python
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/python/dnf-python-3.11.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/python/apt-python-3.11.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/"$pkgm"-python-3.11.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-01-basic.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-02-dev.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-03-image.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-04-video.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-05-dsp.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-06-ml.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-06-stats.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-07-torch-cuda-10.2.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-07-torch-cuda-11.8.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-07-torch-cuda-12.1.sh
+
+    # # source ${SINGULARITY_ROOTFS}/opt/modules/post/system/write-99-z-my-startup.sh
+
+
+%environment
+    # This section is written in /.singularity.d/env/90-environment.sh and called
+    # upon shell into this singularity environment.
+    # Note that the following pre-defined, read-only files will override settings here:
+    # 91-environment.sh, 94-appsbase.sh, 95-apps.sh, 99-base.sh, and 99-runtimevars.sh
+
+    # source ${SINGULARITY_ROOTFS}/opt/modules/environment/system/envs.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/environment/system/locales.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/environment/system/aliases.sh
+
+    # echo "environment"
+    # source ${SINGULARITY_ROOTFS}/opt/modules/environment/system/startup.sh
+
+%test
+    # ${SINGULARITY_ROOTFS}/opt/modules/test/tools.sh
+    # python3 -c "import torch; print(torch.cuda.is_available()); print('Test Ends.')"
+
+%startscript
+    # echo "startscript"
+    # source ${SINGULARITY_ROOTFS}/opt/modules/environment/system/startup.sh
+
+
+%runscript

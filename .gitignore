@@ -8,6 +8,7 @@ build/
 .testmondata*
 .coverage*
 htmlcov/
+.venv
 .venv/
 .env
 .env.*

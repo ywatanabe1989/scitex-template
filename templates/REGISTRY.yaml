@@ -1,0 +1,29 @@
+# Registry of all templates vendored in this repo.
+# Used by scitex_template.registry when listing available templates without
+# loading every template.yaml individually.
+
+templates:
+  - id: pip-project
+    description: Generic Python pip-installable package with CI, tests, docs
+    version: "0.1.0"
+    path: templates/pip-project
+
+  - id: minimal
+    description: Minimal scitex-* starter — src/tests/pyproject, no extras
+    version: "0.1.0"
+    path: templates/minimal
+
+  - id: cloud-module
+    description: SciTeX Cloud workspace module (TypeScript + Python backend)
+    version: "0.1.0"
+    path: templates/cloud-module
+
+  - id: singularity
+    description: Apptainer/Singularity container recipe + build scripts
+    version: "0.1.0"
+    path: templates/singularity
+
+  - id: research
+    description: Full research project with writer, scholar, MNIST pipeline example
+    version: "0.1.0"
+    path: templates/research

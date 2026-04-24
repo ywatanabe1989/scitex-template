@@ -1,0 +1,8 @@
+# scitex-template registry metadata
+id: minimal
+name: "minimal"
+version: "0.1.0"
+description: "Minimal scitex-* starter — src/tests/pyproject, no extras"
+scitex_template_requires: ">=0.2.0"
+upstream_repo: "https://github.com/ywatanabe1989/scitex-minimal-template"
+upstream_archived: true

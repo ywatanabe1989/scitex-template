@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scitex-template"
-version = "0.1.0"
-description = "Project template cloner + code snippet library for the SciTeX ecosystem"
+version = "0.2.0"
+description = "Project template cloner + code snippet library for the SciTeX ecosystem — six templates vendored, shallow-cloned on demand to ~/.scitex/template/cache/"
 readme = "README.md"
 license = "AGPL-3.0-only"
 requires-python = ">=3.10"
@@ -57,3 +57,15 @@ scitex-template = "scitex_template.mcp_server:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/scitex_template"]
+# templates/ is intentionally NOT in the wheel — the cloner shallow-clones
+# this repo into ~/.scitex/template/cache/ on first use to get the actual
+# template content. Keeps the pypi wheel tiny (<100KB) while the git repo
+# stays the single source of truth for template payload.
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/scitex_template",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]

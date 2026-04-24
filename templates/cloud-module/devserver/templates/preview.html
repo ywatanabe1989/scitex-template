@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>SciTeX Module Preview</title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        <link rel="stylesheet" href="{% static 'usermod.css' %}" />
+        <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0d1117;
+            color: #e6edf3;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+        }
+        .devserver-banner {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 8px 24px;
+            font-size: 12px;
+            color: #8b949e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .devserver-banner i { color: #388bfd; }
+        .devserver-banner code {
+            background: #0d1117;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="devserver-banner">
+            <i class="fas fa-flask"></i>
+            <span>SciTeX Module DevServer &mdash; editing <code>{{ module_path }}</code></span>
+        </div>
+        <div class="usermod-workspace">
+            {% if error %}
+                <div class="usermod-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <pre>{{ error }}</pre>
+                </div>
+            {% endif %}
+            {% if manifest %}
+                <div class="usermod-header">
+                    <div class="usermod-title">
+                        <i class="fas {{ manifest.icon|default:'fa-puzzle-piece' }}"></i>
+                        <h2>{{ manifest.label|default:'Module' }}</h2>
+                        <span class="usermod-version">v{{ manifest.version|default:'0.1.0' }}</span>
+                    </div>
+                    {% if manifest.description %}<p class="usermod-description">{{ manifest.description }}</p>{% endif %}
+                </div>
+            {% endif %}
+            {% if outputs %}
+                <div class="usermod-outputs">
+                    {% for item in outputs %}
+                        <div class="usermod-card usermod-card--{{ item.type }}">
+                            {% if item.title %}<div class="usermod-card-title">{{ item.title }}</div>{% endif %}
+                            {% if item.type == "figure" %}
+                                <img src="{{ item.data }}"
+                                     alt="{{ item.title|default:'Module output figure' }}"
+                                     class="usermod-figure" />
+                            {% elif item.type == "table" %}
+                                <div class="usermod-table-wrap">{{ item.data|safe }}</div>
+                            {% elif item.type == "text" %}
+                                <p class="usermod-text">{{ item.data }}</p>
+                            {% elif item.type == "json" %}
+                                <pre class="usermod-json">{{ item.data }}</pre>
+                            {% elif item.type == "html" %}
+                                {{ item.data|safe }}
+                            {% else %}
+                                <pre class="usermod-raw">{{ item.data }}</pre>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elif not error %}
+                <div class="usermod-empty">
+                    <i class="fas fa-flask"></i>
+                    <p>
+                        No outputs. Check your <code>stx.module.output()</code> calls.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </body>
+</html>
