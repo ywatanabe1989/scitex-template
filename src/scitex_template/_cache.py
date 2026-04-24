@@ -124,9 +124,21 @@ def clone_template_from_cache(
 
     for child in source.iterdir():
         dst = target_path / child.name
-        if child.is_dir():
-            shutil.copytree(child, dst)
+        if child.is_dir() and not child.is_symlink():
+            # symlinks=True preserves intra-template symlinks; dangling
+            # ones are skipped so a broken link in source doesn't blow up
+            # the whole clone.
+            shutil.copytree(child, dst, symlinks=True, ignore_dangling_symlinks=True)
+        elif child.is_symlink():
+            # Recreate the symlink at dst; ok if target doesn't exist yet
+            # (e.g. forward reference resolved later in the loop).
+            link_target = (
+                child.readlink()
+                if hasattr(child, "readlink")
+                else Path(str(child).join(""))
+            )
+            dst.symlink_to(link_target)
         else:
-            shutil.copy2(child, dst)
+            shutil.copy2(child, dst, follow_symlinks=False)
 
     return target_path
