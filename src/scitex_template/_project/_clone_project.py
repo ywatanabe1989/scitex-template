@@ -40,6 +40,19 @@ logger = getLogger(__name__)
 # Items always preserved during include_dirs filtering
 _ALWAYS_KEEP = {".gitignore", ".git", "LICENSE", "README.md"}
 
+# Legacy template_name → registry id in the vendored monorepo.
+# When a call hits this table, clone_project uses the monorepo cache
+# (~/.scitex/template/cache/templates/<id>/) instead of git-cloning the
+# per-template remote repo. Falls through to the legacy flow for any
+# template_name not in this table (e.g. custom user templates).
+_MONOREPO_REGISTRY_IDS = {
+    "pip-project-template": "pip-project",
+    "scitex-minimal-template": "minimal",
+    "scitex-template-cloud-module": "cloud-module",
+    "scitex-research-template": "research",
+    "singularity_template": "singularity",
+}
+
 
 def _filter_to_include_dirs(target_path: Path, include_dirs: List[str]) -> None:
     """Remove top-level items not in include_dirs.
@@ -131,6 +144,30 @@ def clone_project(
                 "Please choose a different project name or remove the existing directory"
             )
             return False
+
+        # Fast path — if this template is vendored in the scitex-template
+        # monorepo, populate from the shallow-cloned cache at
+        # ~/.scitex/template/cache/ instead of the per-template remote URL.
+        # Falls through to the legacy flow for custom templates not in the
+        # registry, or when a specific branch/tag is requested (the cache
+        # always tracks the monorepo's main branch).
+        registry_id = _MONOREPO_REGISTRY_IDS.get(template_name)
+        if registry_id is not None and branch is None and tag is None:
+            try:
+                from .._cache import clone_template_from_cache
+
+                clone_template_from_cache(registry_id, target_path)
+                log_final(f"Cloned {registry_id} from monorepo cache → {target_path}")
+                if include_dirs:
+                    _filter_to_include_dirs(target_path, include_dirs)
+                return True
+            except Exception as e:
+                logger.info(
+                    f"Monorepo cache path failed ({e}); falling back to remote clone of {template_url}"
+                )
+                # Remove any partial target and fall through to legacy flow
+                if target_path.exists():
+                    shutil.rmtree(target_path)
 
         # Setup project structure
         with log_group("Setting up project structure", "📦") as ctx:
