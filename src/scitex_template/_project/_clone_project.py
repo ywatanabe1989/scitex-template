@@ -51,6 +51,7 @@ _MONOREPO_REGISTRY_IDS = {
     "scitex-template-cloud-module": "cloud-module",
     "scitex-research-template": "research",
     "singularity_template": "singularity",
+    "paper-template": "paper",
 }
 
 

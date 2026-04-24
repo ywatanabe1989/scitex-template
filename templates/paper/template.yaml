@@ -1,0 +1,8 @@
+# scitex-template registry metadata
+id: paper
+name: "paper"
+version: "0.1.0"
+description: "LaTeX manuscript scaffold — compile, manuscript, revision, supplementary"
+scitex_template_requires: ">=0.3.0"
+upstream_repo: "https://github.com/ywatanabe1989/paper-template"
+upstream_archived: false  # will be archived after this PR merges
