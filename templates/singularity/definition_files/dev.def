@@ -1,0 +1,57 @@
+Bootstrap: docker
+From: rockylinux/rockylinux:latest
+
+%help
+    # $0
+    Help message here.
+
+%files
+    ./.singularity/modules /opt/
+
+%labels
+    source ${SINGULARITY_ROOTFS}/opt/modules/labels/labels.sh
+
+%setup
+    cp -r ./.singularity/modules ${SINGULARITY_ROOTFS}/opt/
+    source ${SINGULARITY_ROOTFS}/opt/modules/setup/mk-bind-dirs.sh
+
+%post -c /bin/bash
+    # After the OS has been installed
+
+    # Environment
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/system/envs.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/system/locales.sh
+
+    # Dnf
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/dnf/dnf-packages.sh
+
+    # Python
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/3.12.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-01-basic.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-02-dev.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-03-image.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-04-video.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-05-dsp.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-06-ml.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-06-stats.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-07-torch-cuda-10.2.sh
+    # source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-07-torch-cuda-11.8.sh
+    source ${SINGULARITY_ROOTFS}/opt/modules/post/python/pip-07-torch-cuda-12.1.sh
+
+
+%environment
+    # After the OS has been installed
+    # At runtime.
+    source /opt/modules/environment/system/envs.sh
+    source /opt/modules/environment/system/locales.sh
+    source /opt/modules/environment/system/aliases.sh
+
+
+%test
+    /opt/modules/test/tools.sh
+
+%startscript
+    /opt/modules/run/run.sh
+
+%runscript
+    /opt/modules/run/run.sh

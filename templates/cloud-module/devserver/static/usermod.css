@@ -1,0 +1,174 @@
+/* User Module workspace styles — standalone devserver version */
+/* Identical to SciTeX Cloud modulemaker_app/css/usermod.css */
+
+/* CSS custom properties — standalone defaults (SciTeX Cloud overrides these) */
+:root {
+  --workspace-text-primary: #e6edf3;
+  --workspace-text-secondary: #8b949e;
+  --workspace-bg-secondary: #161b22;
+  --workspace-bg-tertiary: #0d1117;
+  --workspace-border: #30363d;
+  --accent-blue: #388bfd;
+  --accent-red: #f85149;
+  --accent-green: #3fb950;
+}
+
+.usermod-workspace {
+  padding: 24px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Header */
+.usermod-header {
+  margin-bottom: 24px;
+}
+
+.usermod-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.usermod-title h2 {
+  color: var(--workspace-text-primary, #e6edf3);
+  margin: 0;
+  font-size: 20px;
+}
+
+.usermod-title i {
+  color: var(--accent-blue, #388bfd);
+  font-size: 20px;
+}
+
+.usermod-version {
+  color: var(--workspace-text-secondary, #8b949e);
+  font-size: 12px;
+  background: var(--workspace-bg-tertiary, #0d1117);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.usermod-description {
+  color: var(--workspace-text-secondary, #8b949e);
+  font-size: 14px;
+  margin: 4px 0 12px;
+}
+
+/* Error display */
+.usermod-error {
+  background: rgba(248, 81, 73, 0.1);
+  border: 1px solid var(--accent-red, #f85149);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--accent-red, #f85149);
+  font-size: 14px;
+}
+
+.usermod-error pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Output cards */
+.usermod-outputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.usermod-card {
+  background: var(--workspace-bg-secondary, #161b22);
+  border: 1px solid var(--workspace-border, #30363d);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.usermod-card-title {
+  color: var(--workspace-text-secondary, #8b949e);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.usermod-figure {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.usermod-caption {
+  color: var(--workspace-text-secondary, #8b949e);
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.usermod-table-wrap {
+  overflow-x: auto;
+}
+
+.usermod-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--workspace-text-primary, #e6edf3);
+}
+
+.usermod-table-wrap th,
+.usermod-table-wrap td {
+  padding: 8px 12px;
+  border: 1px solid var(--workspace-border, #30363d);
+  text-align: left;
+}
+
+.usermod-table-wrap th {
+  background: var(--workspace-bg-tertiary, #0d1117);
+  font-weight: 600;
+}
+
+.usermod-text {
+  color: var(--workspace-text-primary, #e6edf3);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.usermod-json,
+.usermod-raw {
+  background: var(--workspace-bg-tertiary, #0d1117);
+  color: var(--workspace-text-secondary, #8b949e);
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-x: auto;
+  margin: 0;
+}
+
+/* Empty state */
+.usermod-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--workspace-text-secondary, #8b949e);
+}
+
+.usermod-empty i {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.usermod-empty p {
+  font-size: 15px;
+}

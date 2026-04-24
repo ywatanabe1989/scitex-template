@@ -1,0 +1,14 @@
+# SciTeX Module Manifest
+# See: https://scitex.ai/docs/modules
+
+name: my-module
+label: My Module
+icon: fa-puzzle-piece
+category: utility
+description: A custom SciTeX module.
+version: 0.1.0
+min_scitex_version: "0.8.0"
+
+dependencies:
+  - numpy
+  - matplotlib

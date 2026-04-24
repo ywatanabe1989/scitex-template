@@ -1,0 +1,8 @@
+# scitex-template registry metadata
+id: singularity
+name: "singularity"
+version: "0.1.0"
+description: "Apptainer/Singularity container recipe + build scripts"
+scitex_template_requires: ">=0.2.0"
+upstream_repo: "https://github.com/ywatanabe1989/singularity_template"
+upstream_archived: true

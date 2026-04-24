@@ -1,0 +1,8 @@
+# scitex-template registry metadata
+id: pip-project
+name: "pip-project"
+version: "0.1.0"
+description: "Generic Python pip-installable package with CI, tests, docs"
+scitex_template_requires: ">=0.2.0"
+upstream_repo: "https://github.com/ywatanabe1989/pip-project-template"
+upstream_archived: true
