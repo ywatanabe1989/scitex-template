@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "scitex-template"
+version = "0.1.0"
+description = "Project template cloner + code snippet library for the SciTeX ecosystem"
+readme = "README.md"
+license = "AGPL-3.0-only"
+requires-python = ">=3.10"
+authors = [
+    { name = "Yusuke Watanabe", email = "ywatanabe@scitex.ai" },
+]
+keywords = [
+    "scitex",
+    "template",
+    "boilerplate",
+    "scaffolding",
+    "research",
+    "pip-project",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    # scitex.git / scitex.logging / scitex.scholar are imported lazily
+    # inside clone_* functions. The extras chain in scitex-python's
+    # pyproject routes `pip install scitex[template]` → scitex-template,
+    # so the scitex umbrella is always installed alongside.
+    "scitex",
+    "gitpython",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+]
+mcp = [
+    "mcp>=1.0.0",
+]
+
+[project.scripts]
+scitex-template = "scitex_template.mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scitex_template"]
