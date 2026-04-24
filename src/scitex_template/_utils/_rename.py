@@ -19,7 +19,9 @@ Handles renaming template package directories (e.g., pip_project_template -> my_
 
 from pathlib import Path
 
-from scitex.logging import getLogger
+import logging
+
+getLogger = logging.getLogger
 
 logger = getLogger(__name__)
 

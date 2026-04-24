@@ -23,7 +23,9 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from scitex.logging import getLogger
+import logging
+
+getLogger = logging.getLogger
 
 logger = getLogger(__name__)
 

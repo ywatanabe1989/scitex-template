@@ -7,12 +7,32 @@ Template management for SciTeX projects.
 
 from pathlib import Path
 
-from scitex.git import (
-    create_child_git,
-    find_parent_git,
-    init_git_repo,
-    remove_child_git,
-)
+# scitex.git is an optional dep (install via `scitex-template[legacy]`) —
+# re-export when available, otherwise expose stubs that raise a clear
+# ImportError if called. Keeps the standalone install import-clean.
+try:
+    from scitex.git import (  # type: ignore[import-not-found]
+        create_child_git,
+        find_parent_git,
+        init_git_repo,
+        remove_child_git,
+    )
+except ImportError:  # pragma: no cover
+
+    def _missing_scitex_git(name):
+        def _stub(*_a, **_k):
+            raise ImportError(
+                f"{name} requires the scitex umbrella. "
+                "Install with: pip install scitex-template[legacy]"
+            )
+
+        _stub.__name__ = name
+        return _stub
+
+    create_child_git = _missing_scitex_git("create_child_git")
+    find_parent_git = _missing_scitex_git("find_parent_git")
+    init_git_repo = _missing_scitex_git("init_git_repo")
+    remove_child_git = _missing_scitex_git("remove_child_git")
 
 from ._code._code_templates import (
     CODE_TEMPLATES,
@@ -75,7 +95,12 @@ def get_template_tree(template_id):
     import subprocess
     import tempfile
 
-    from scitex.scholar.ensure_workspace import SCHOLAR_SUBDIRS
+    try:
+        from scitex.scholar.ensure_workspace import SCHOLAR_SUBDIRS  # type: ignore[import-not-found]
+    except ImportError:
+        # scitex.scholar is optional (scitex-template[legacy]) — fall back
+        # to a hardcoded list matching the scholar workspace convention.
+        SCHOLAR_SUBDIRS = ["bib_files", "library", "prompts"]
 
     tmpdir = tempfile.mkdtemp(prefix="scitex_tree_")
     try:

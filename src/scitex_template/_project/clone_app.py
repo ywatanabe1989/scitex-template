@@ -46,7 +46,9 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from scitex.logging import getLogger
+import logging
+
+getLogger = logging.getLogger
 
 from . import _app_templates as T
 
