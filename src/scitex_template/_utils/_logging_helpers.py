@@ -7,9 +7,22 @@ Provides utilities for grouped operations with visual hierarchy.
 """
 
 from contextlib import contextmanager
-from typing import Optional
 
-from scitex.logging import getLogger
+import logging
+
+# scitex.logging's .success / .fail methods are not in stdlib. Install
+# thin shims on the Logger class so existing .success(...)/.fail(...)
+# calls work when scitex is not installed.
+if not hasattr(logging.Logger, "success"):
+    logging.Logger.success = (  # type: ignore[attr-defined]
+        lambda self, msg, *a, **kw: self.info(msg, *a, **kw)
+    )
+if not hasattr(logging.Logger, "fail"):
+    logging.Logger.fail = (  # type: ignore[attr-defined]
+        lambda self, msg, *a, **kw: self.error(msg, *a, **kw)
+    )
+
+getLogger = logging.getLogger
 
 logger = getLogger(__name__)
 

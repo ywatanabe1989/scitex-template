@@ -19,7 +19,9 @@ Handles updating all references from template package name to new project name.
 
 from pathlib import Path
 
-from scitex.logging import getLogger
+import logging
+
+getLogger = logging.getLogger
 
 logger = getLogger(__name__)
 

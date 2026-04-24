@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scitex-template"
-version = "0.4.0"
+version = "0.5.0"
 description = "Project template cloner + code snippet library for the SciTeX ecosystem — six templates vendored, shallow-cloned on demand to ~/.scitex/template/cache/"
 readme = "README.md"
 license = "AGPL-3.0-only"
@@ -34,14 +34,15 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-    # scitex.git / scitex.logging / scitex.scholar are imported lazily
-    # inside clone_* functions. The extras chain in scitex-python's
-    # pyproject routes `pip install scitex[template]` → scitex-template,
-    # so the scitex umbrella is always installed alongside.
-    "scitex",
     "gitpython",
     "pyyaml",
 ]
+
+# scitex.git / scitex.scholar / scitex.writer are still imported by a few
+# legacy cloners (clone_scitex_minimal, clone_module, clone_app, clone_project
+# remote-fallback path). Install with `pip install scitex-template[legacy]`
+# to enable those codepaths. The cache fast-path for the 6 vendored
+# templates needs none of this.
 
 [project.optional-dependencies]
 dev = [
@@ -50,6 +51,12 @@ dev = [
 ]
 mcp = [
     "mcp>=1.0.0",
+]
+# Enables legacy cloners that still import scitex.git / scitex.scholar /
+# scitex.writer. The cache fast-path for the 6 vendored templates works
+# without this.
+legacy = [
+    "scitex",
 ]
 
 [project.scripts]

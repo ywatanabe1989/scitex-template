@@ -12,7 +12,9 @@ All functions accept a plain metadata dict — no Django dependencies.
 from pathlib import Path
 from typing import Dict
 
-from scitex.logging import getLogger
+import logging
+
+getLogger = logging.getLogger
 
 logger = getLogger(__name__)
 

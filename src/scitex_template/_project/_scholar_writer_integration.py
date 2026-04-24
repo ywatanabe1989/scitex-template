@@ -25,7 +25,9 @@ import os
 from pathlib import Path
 from typing import Optional, Dict
 
-from scitex.logging import getLogger
+import logging
+
+getLogger = logging.getLogger
 
 logger = getLogger(__name__)
 

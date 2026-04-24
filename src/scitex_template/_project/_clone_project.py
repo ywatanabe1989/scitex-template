@@ -25,8 +25,29 @@ import tempfile
 from pathlib import Path
 from typing import List, Optional
 
-import scitex.git
-from scitex.logging import getLogger
+import logging
+
+# scitex.git is an optional dep (install scitex-template[legacy]).
+# The cache fast-path for registered templates doesn't need it at all.
+# The remote-clone fallback does — when unavailable, that path raises
+# a clear error via _require_scitex_git() below.
+try:
+    import scitex.git  # type: ignore[import-not-found]
+    import scitex  # type: ignore[import-not-found]
+except ImportError:  # pragma: no cover
+    scitex = None  # type: ignore[assignment]
+
+
+def _require_scitex_git() -> None:
+    if scitex is None:
+        raise ImportError(
+            "The remote-clone fallback requires the scitex umbrella. "
+            "Install with: pip install scitex-template[legacy]  "
+            "(the cache fast-path for registered templates works without it)."
+        )
+
+
+getLogger = logging.getLogger
 
 from .._utils._copy import copy_template
 from .._utils._customize import update_references
@@ -136,7 +157,9 @@ def clone_project(
 
         # Check if target directory already exists
         if target_path.exists():
-            if scitex.git.is_cloned_from(target_path, template_url):
+            if scitex is not None and scitex.git.is_cloned_from(
+                target_path, template_url
+            ):
                 log_final(f"Project already exists at {target_path}")
                 return True
             logger.error(f"Directory already exists: {target_path}")
@@ -175,10 +198,12 @@ def clone_project(
             target_dir_path.mkdir(parents=True, exist_ok=True)
             ctx.step(f"Target directory: {target_dir_path}")
 
-            # Determine cache location
-            from scitex.config import get_scitex_dir
+            # Determine cache location (standalone — no scitex.config dep).
+            # Honors SCITEX_DIR override per general/01_arch_06.
+            import os
 
-            cache_dir = get_scitex_dir() / "templates"
+            scitex_dir = Path(os.environ.get("SCITEX_DIR") or (Path.home() / ".scitex"))
+            cache_dir = scitex_dir / "template" / "cache"
             cache_name = template_name.replace("/", "_").replace(":", "_")
             cache_path = cache_dir / cache_name
 

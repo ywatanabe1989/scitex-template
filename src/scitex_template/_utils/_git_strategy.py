@@ -25,8 +25,17 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
-import scitex.git
-from scitex.logging import getLogger
+import logging
+
+# scitex.git is an optional dep (scitex-template[legacy]). Callers that
+# reach apply_git_strategy() need it; the cache fast-path does not.
+try:
+    import scitex.git  # type: ignore[import-not-found]
+    import scitex  # type: ignore[import-not-found]
+except ImportError:  # pragma: no cover
+    scitex = None  # type: ignore[assignment]
+
+getLogger = logging.getLogger
 
 from ._logging_helpers import log_group
 
