@@ -30,7 +30,7 @@ async def list_templates_handler() -> dict:
         Success status and list of templates with basic info
     """
     try:
-        from scitex.template import get_available_templates_info
+        from scitex_template import get_available_templates_info
 
         templates = get_available_templates_info()
 
@@ -72,7 +72,7 @@ async def get_template_info_handler(template_id: str) -> dict:
         Success status and template details
     """
     try:
-        from scitex.template import get_available_templates_info
+        from scitex_template import get_available_templates_info
 
         templates = get_available_templates_info()
 
@@ -133,7 +133,7 @@ async def clone_template_handler(
         Success status and project path
     """
     try:
-        from scitex.template import clone_template as _clone_template
+        from scitex_template import clone_template as _clone_template
 
         # Build project path
         if target_dir:
@@ -214,11 +214,11 @@ async def get_code_template_handler(
     """
     try:
         if template_id == "all":
-            from scitex.template import get_all_templates
+            from scitex_template import get_all_templates
 
             content = get_all_templates()
         else:
-            from scitex.template import get_code_template
+            from scitex_template import get_code_template
 
             content = get_code_template(
                 template_id=template_id,
@@ -253,7 +253,7 @@ async def list_code_templates_handler() -> dict:
         Success status and list of code templates
     """
     try:
-        from scitex.template import list_code_templates
+        from scitex_template import list_code_templates
 
         templates = list_code_templates()
 

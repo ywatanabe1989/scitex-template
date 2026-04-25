@@ -10,7 +10,7 @@ class TestListTemplatesHandler:
     @pytest.mark.asyncio
     async def test_list_templates_returns_dict(self):
         """Test that handler returns dict with success key."""
-        from scitex.template._mcp.handlers import list_templates_handler
+        from scitex_template._mcp.handlers import list_templates_handler
 
         result = await list_templates_handler()
         assert isinstance(result, dict)
@@ -19,7 +19,7 @@ class TestListTemplatesHandler:
     @pytest.mark.asyncio
     async def test_list_templates_contains_templates(self):
         """Test that result contains templates list."""
-        from scitex.template._mcp.handlers import list_templates_handler
+        from scitex_template._mcp.handlers import list_templates_handler
 
         result = await list_templates_handler()
         if result.get("success"):
@@ -32,7 +32,7 @@ class TestGetTemplateInfoHandler:
     @pytest.mark.asyncio
     async def test_get_template_info_research(self):
         """Test getting info for research template."""
-        from scitex.template._mcp.handlers import get_template_info_handler
+        from scitex_template._mcp.handlers import get_template_info_handler
 
         result = await get_template_info_handler("research")
         assert isinstance(result, dict)
@@ -41,7 +41,7 @@ class TestGetTemplateInfoHandler:
     @pytest.mark.asyncio
     async def test_get_template_info_pip_project(self):
         """Test getting info for pip_project template."""
-        from scitex.template._mcp.handlers import get_template_info_handler
+        from scitex_template._mcp.handlers import get_template_info_handler
 
         result = await get_template_info_handler("pip_project")
         assert isinstance(result, dict)
@@ -50,7 +50,7 @@ class TestGetTemplateInfoHandler:
     @pytest.mark.asyncio
     async def test_get_template_info_invalid(self):
         """Test getting info for invalid template."""
-        from scitex.template._mcp.handlers import get_template_info_handler
+        from scitex_template._mcp.handlers import get_template_info_handler
 
         result = await get_template_info_handler("nonexistent_template")
         assert isinstance(result, dict)
@@ -63,7 +63,7 @@ class TestListGitStrategiesHandler:
     @pytest.mark.asyncio
     async def test_list_git_strategies(self):
         """Test listing git strategies."""
-        from scitex.template._mcp.handlers import list_git_strategies_handler
+        from scitex_template._mcp.handlers import list_git_strategies_handler
 
         result = await list_git_strategies_handler()
         assert isinstance(result, dict)
@@ -72,7 +72,7 @@ class TestListGitStrategiesHandler:
     @pytest.mark.asyncio
     async def test_list_git_strategies_contains_strategies(self):
         """Test that result contains strategies."""
-        from scitex.template._mcp.handlers import list_git_strategies_handler
+        from scitex_template._mcp.handlers import list_git_strategies_handler
 
         result = await list_git_strategies_handler()
         if result.get("success"):
@@ -85,7 +85,7 @@ class TestGetCodeTemplateHandler:
     @pytest.mark.asyncio
     async def test_get_code_template_session(self):
         """Test getting session code template."""
-        from scitex.template._mcp.handlers import get_code_template_handler
+        from scitex_template._mcp.handlers import get_code_template_handler
 
         result = await get_code_template_handler("session")
         assert isinstance(result, dict)
@@ -95,7 +95,7 @@ class TestGetCodeTemplateHandler:
     @pytest.mark.asyncio
     async def test_get_code_template_all(self):
         """Test getting all code templates combined."""
-        from scitex.template._mcp.handlers import get_code_template_handler
+        from scitex_template._mcp.handlers import get_code_template_handler
 
         result = await get_code_template_handler("all")
         assert isinstance(result, dict)
@@ -105,7 +105,7 @@ class TestGetCodeTemplateHandler:
     @pytest.mark.asyncio
     async def test_get_code_template_invalid(self):
         """Test getting invalid code template."""
-        from scitex.template._mcp.handlers import get_code_template_handler
+        from scitex_template._mcp.handlers import get_code_template_handler
 
         result = await get_code_template_handler("nonexistent")
         assert isinstance(result, dict)
@@ -115,7 +115,7 @@ class TestGetCodeTemplateHandler:
     @pytest.mark.asyncio
     async def test_get_code_template_with_filepath(self):
         """Test getting code template with custom filepath."""
-        from scitex.template._mcp.handlers import get_code_template_handler
+        from scitex_template._mcp.handlers import get_code_template_handler
 
         result = await get_code_template_handler("session", filepath="custom_script.py")
         assert isinstance(result, dict)
@@ -125,7 +125,7 @@ class TestGetCodeTemplateHandler:
     @pytest.mark.asyncio
     async def test_get_code_template_module_usage(self):
         """Test getting module usage templates."""
-        from scitex.template._mcp.handlers import get_code_template_handler
+        from scitex_template._mcp.handlers import get_code_template_handler
 
         for template_id in [
             "plt",
@@ -148,7 +148,7 @@ class TestListCodeTemplatesHandler:
     @pytest.mark.asyncio
     async def test_list_code_templates(self):
         """Test listing code templates."""
-        from scitex.template._mcp.handlers import list_code_templates_handler
+        from scitex_template._mcp.handlers import list_code_templates_handler
 
         result = await list_code_templates_handler()
         assert isinstance(result, dict)
@@ -158,7 +158,7 @@ class TestListCodeTemplatesHandler:
     @pytest.mark.asyncio
     async def test_list_code_templates_contains_expected(self):
         """Test that list contains expected templates."""
-        from scitex.template._mcp.handlers import list_code_templates_handler
+        from scitex_template._mcp.handlers import list_code_templates_handler
 
         result = await list_code_templates_handler()
         if result.get("success"):

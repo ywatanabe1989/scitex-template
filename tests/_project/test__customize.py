@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # Timestamp: "2026-02-17 (ywatanabe)"
 # File: tests/scitex/template/_project/test__customize.py
-"""Tests for scitex.template._project._customize."""
+"""Tests for scitex_template._project._customize."""
 
 import pytest
 
-from scitex.template._project._customize import (
+from scitex_template._project._customize import (
     customize_minimal_template,
     customize_template,
 )
