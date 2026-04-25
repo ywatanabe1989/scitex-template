@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # Timestamp: "2026-02-17 (ywatanabe)"
 # File: tests/scitex/template/_project/test__directory_structure.py
-"""Tests for scitex.template._project._directory_structure."""
+"""Tests for scitex_template._project._directory_structure."""
 
 import pytest
 
-from scitex.template._project._directory_structure import (
+from scitex_template._project._directory_structure import (
     PROJECT_STRUCTURE,
     build_directory_tree,
 )

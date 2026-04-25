@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # Timestamp: "2026-02-17 (ywatanabe)"
 # File: tests/scitex/template/_project/test__generate_readme.py
-"""Tests for scitex.template._project._generate_readme."""
+"""Tests for scitex_template._project._generate_readme."""
 
 import pytest
 
-from scitex.template._project._generate_readme import (
+from scitex_template._project._generate_readme import (
     create_minimal_readme,
     create_project_readme,
 )

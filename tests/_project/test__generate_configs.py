@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # Timestamp: "2026-02-17 (ywatanabe)"
 # File: tests/scitex/template/_project/test__generate_configs.py
-"""Tests for scitex.template._project._generate_configs."""
+"""Tests for scitex_template._project._generate_configs."""
 
 import json
 
 import pytest
 
-from scitex.template._project._generate_configs import (
+from scitex_template._project._generate_configs import (
     create_env_template,
     create_paths_config,
     create_project_config,

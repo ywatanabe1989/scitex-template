@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from scitex.template._project._clone_template import (
+from scitex_template._project._clone_template import (
     ALIASES,
     TEMPLATES,
     clone_template,
@@ -167,7 +167,7 @@ class TestFilterToIncludeDirs:
 
     def test_removes_unlisted_dirs(self, tmp_path):
         """Directories not in include_dirs are removed."""
-        from scitex.template._project._clone_project import _filter_to_include_dirs
+        from scitex_template._project._clone_project import _filter_to_include_dirs
 
         (tmp_path / "00_shared").mkdir()
         (tmp_path / "01_manuscript").mkdir()
@@ -184,7 +184,7 @@ class TestFilterToIncludeDirs:
 
     def test_preserves_readme_and_license(self, tmp_path):
         """README.md and LICENSE are always preserved."""
-        from scitex.template._project._clone_project import _filter_to_include_dirs
+        from scitex_template._project._clone_project import _filter_to_include_dirs
 
         (tmp_path / "00_shared").mkdir()
         (tmp_path / "README.md").write_text("readme")
@@ -199,7 +199,7 @@ class TestFilterToIncludeDirs:
 
     def test_preserves_dotfiles(self, tmp_path):
         """Dotfiles like .gitignore are always preserved."""
-        from scitex.template._project._clone_project import _filter_to_include_dirs
+        from scitex_template._project._clone_project import _filter_to_include_dirs
 
         (tmp_path / "00_shared").mkdir()
         (tmp_path / ".gitignore").write_text("*.pyc")
@@ -216,7 +216,7 @@ class TestFilterToIncludeDirs:
 
     def test_removes_unlisted_files(self, tmp_path):
         """Files not in include_dirs are also removed."""
-        from scitex.template._project._clone_project import _filter_to_include_dirs
+        from scitex_template._project._clone_project import _filter_to_include_dirs
 
         (tmp_path / "00_shared").mkdir()
         (tmp_path / "compile.sh").write_text("#!/bin/bash")
@@ -233,7 +233,7 @@ class TestMinimalIncludeDirs:
 
     def test_minimal_dirs_defined(self):
         """MINIMAL_INCLUDE_DIRS is exported and contains expected dirs."""
-        from scitex.template import MINIMAL_INCLUDE_DIRS
+        from scitex_template import MINIMAL_INCLUDE_DIRS
 
         assert "00_shared" in MINIMAL_INCLUDE_DIRS
         assert "01_manuscript" in MINIMAL_INCLUDE_DIRS
@@ -244,14 +244,14 @@ class TestMinimalIncludeDirs:
 
     def test_minimal_includes_supplementary_and_revision(self):
         """Minimal template includes supplementary and revision."""
-        from scitex.template import MINIMAL_INCLUDE_DIRS
+        from scitex_template import MINIMAL_INCLUDE_DIRS
 
         assert "02_supplementary" in MINIMAL_INCLUDE_DIRS
         assert "03_revision" in MINIMAL_INCLUDE_DIRS
 
     def test_minimal_excludes_dev_dirs(self):
         """Minimal template excludes dev-only directories."""
-        from scitex.template import MINIMAL_INCLUDE_DIRS
+        from scitex_template import MINIMAL_INCLUDE_DIRS
 
         assert "src" not in MINIMAL_INCLUDE_DIRS
         assert "tests" not in MINIMAL_INCLUDE_DIRS
@@ -259,10 +259,10 @@ class TestMinimalIncludeDirs:
     def test_clone_research_minimal_uses_include_dirs(self):
         """clone_research_minimal passes include_dirs to clone_project."""
         with patch(
-            "scitex.template._project.clone_research_minimal.clone_project"
+            "scitex_template._project.clone_research_minimal.clone_project"
         ) as mock:
             mock.return_value = True
-            from scitex.template._project.clone_research_minimal import (
+            from scitex_template._project.clone_research_minimal import (
                 MINIMAL_INCLUDE_DIRS,
                 clone_research_minimal,
             )
@@ -278,7 +278,7 @@ class TestCustomizeMinimalPaths:
 
     def test_direct_clone_layout(self, tmp_path):
         """customize_minimal_template works with direct 00_shared/ layout."""
-        from scitex.template._project._customize import customize_minimal_template
+        from scitex_template._project._customize import customize_minimal_template
 
         shared = tmp_path / "00_shared"
         shared.mkdir()
@@ -297,7 +297,7 @@ class TestCustomizeMinimalPaths:
 
     def test_nested_layout_still_works(self, tmp_path):
         """customize_minimal_template also works with scitex/writer/ layout."""
-        from scitex.template._project._customize import customize_minimal_template
+        from scitex_template._project._customize import customize_minimal_template
 
         nested = tmp_path / "scitex" / "writer" / "00_shared"
         nested.mkdir(parents=True)
@@ -313,31 +313,31 @@ class TestCustomizeMinimalPaths:
 
 
 class TestImportFromPackage:
-    """Test that clone_template is importable from scitex.template."""
+    """Test that clone_template is importable from scitex_template."""
 
     def test_import_from_template(self):
-        """clone_template is importable from scitex.template."""
-        from scitex.template import clone_template as ct
+        """clone_template is importable from scitex_template."""
+        from scitex_template import clone_template as ct
 
         assert callable(ct)
 
     def test_in_all(self):
         """clone_template is in __all__."""
-        import scitex.template
+        import scitex_template
 
-        assert "clone_template" in scitex.template.__all__
+        assert "clone_template" in scitex_template.__all__
 
     def test_minimal_include_dirs_in_all(self):
         """MINIMAL_INCLUDE_DIRS is in __all__."""
-        import scitex.template
+        import scitex_template
 
-        assert "MINIMAL_INCLUDE_DIRS" in scitex.template.__all__
+        assert "MINIMAL_INCLUDE_DIRS" in scitex_template.__all__
 
     def test_clone_scitex_minimal_in_all(self):
         """clone_scitex_minimal is in __all__."""
-        import scitex.template
+        import scitex_template
 
-        assert "clone_scitex_minimal" in scitex.template.__all__
+        assert "clone_scitex_minimal" in scitex_template.__all__
 
 
 class TestScitexMinimalDispatch:
@@ -383,57 +383,57 @@ class TestScitexMinimalDispatch:
 class TestScitexMinimalComposition:
     """Test clone_scitex_minimal composes ensure calls."""
 
-    @patch("scitex.template._project._scholar_writer_integration.ensure_integration")
+    @patch("scitex_template._project._scholar_writer_integration.ensure_integration")
     @patch("scitex.scholar.ensure")
     @patch("scitex.writer.ensure")
     def test_calls_writer_ensure(self, mock_writer, mock_scholar, mock_int, tmp_path):
         """clone_scitex_minimal calls writer.ensure."""
-        from scitex.template._project.clone_scitex_minimal import clone_scitex_minimal
+        from scitex_template._project.clone_scitex_minimal import clone_scitex_minimal
 
         clone_scitex_minimal(str(tmp_path / "proj"))
         mock_writer.assert_called_once()
 
-    @patch("scitex.template._project._scholar_writer_integration.ensure_integration")
+    @patch("scitex_template._project._scholar_writer_integration.ensure_integration")
     @patch("scitex.scholar.ensure")
     @patch("scitex.writer.ensure")
     def test_calls_scholar_ensure(self, mock_writer, mock_scholar, mock_int, tmp_path):
         """clone_scitex_minimal calls scholar.ensure."""
-        from scitex.template._project.clone_scitex_minimal import clone_scitex_minimal
+        from scitex_template._project.clone_scitex_minimal import clone_scitex_minimal
 
         clone_scitex_minimal(str(tmp_path / "proj"))
         mock_scholar.assert_called_once()
 
-    @patch("scitex.template._project._scholar_writer_integration.ensure_integration")
+    @patch("scitex_template._project._scholar_writer_integration.ensure_integration")
     @patch("scitex.scholar.ensure")
     @patch("scitex.writer.ensure")
     def test_calls_ensure_integration(
         self, mock_writer, mock_scholar, mock_int, tmp_path
     ):
         """clone_scitex_minimal sets up integration."""
-        from scitex.template._project.clone_scitex_minimal import clone_scitex_minimal
+        from scitex_template._project.clone_scitex_minimal import clone_scitex_minimal
 
         clone_scitex_minimal(str(tmp_path / "proj"))
         mock_int.assert_called_once()
 
-    @patch("scitex.template._project._scholar_writer_integration.ensure_integration")
+    @patch("scitex_template._project._scholar_writer_integration.ensure_integration")
     @patch("scitex.scholar.ensure")
     @patch("scitex.writer.ensure")
     def test_forwards_git_strategy(self, mock_writer, mock_scholar, mock_int, tmp_path):
         """git_strategy is forwarded to writer.ensure."""
-        from scitex.template._project.clone_scitex_minimal import clone_scitex_minimal
+        from scitex_template._project.clone_scitex_minimal import clone_scitex_minimal
 
         clone_scitex_minimal(str(tmp_path / "proj"), git_strategy="origin")
         _, kwargs = mock_writer.call_args
         assert kwargs["git_strategy"] == "origin"
 
-    @patch("scitex.template._project._scholar_writer_integration.ensure_integration")
+    @patch("scitex_template._project._scholar_writer_integration.ensure_integration")
     @patch("scitex.scholar.ensure")
     @patch("scitex.writer.ensure")
     def test_returns_true_on_success(
         self, mock_writer, mock_scholar, mock_int, tmp_path
     ):
         """Returns True on successful creation."""
-        from scitex.template._project.clone_scitex_minimal import clone_scitex_minimal
+        from scitex_template._project.clone_scitex_minimal import clone_scitex_minimal
 
         result = clone_scitex_minimal(str(tmp_path / "proj"))
         assert result is True
