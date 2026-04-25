@@ -75,11 +75,24 @@ Tool names follow the ecosystem prefix convention:
 
 ## Sub-skills
 
-- [project-templates.md](project-templates.md) — cloner internals: `clone_project` dispatcher, fast-path vs legacy flow, cache layout
-- [code-templates.md](code-templates.md) — `get_code_template`, `list_code_templates`, all 14 snippet IDs (`session`, `io`, `plt`, `stats`, …)
-- [git-strategies.md](git-strategies.md) — `git_strategy={"child","parent","origin",None}`
-- [config-generators.md](config-generators.md) — `create_project_config`, `build_directory_tree`, README generators
-- [scholar-writer-integration.md](scholar-writer-integration.md) — bibliography symlink between scholar and writer workspaces
+Numbered-prefix convention (matches `~/.claude/skills/scitex/scitex-scholar`
+and `scitex-io` layout): 01-09 core interfaces, 10-19 features, 20+ meta.
+
+### Interfaces (01-09)
+- [01_quick-start.md](01_quick-start.md) — 60-second install + clone
+- [02_python-api.md](02_python-api.md) — full public Python surface
+- [03_cli-reference.md](03_cli-reference.md) — every CLI subcommand + flag
+- [04_mcp-tools.md](04_mcp-tools.md) — agent integration
+
+### Features (10-19)
+- [10_project-templates.md](10_project-templates.md) — cloner internals: `clone_project` dispatcher, fast-path vs legacy flow, cache layout
+- [11_code-templates.md](11_code-templates.md) — `get_code_template`, `list_code_templates`, all 14 snippet IDs (`session`, `io`, `plt`, `stats`, …)
+- [12_git-strategies.md](12_git-strategies.md) — `git_strategy={"child","parent","origin",None}`
+- [13_config-generators.md](13_config-generators.md) — `create_project_config`, `build_directory_tree`, README generators
+- [14_scholar-writer-integration.md](14_scholar-writer-integration.md) — bibliography symlink between scholar and writer workspaces
+
+### Meta (20+)
+- [20_env-vars.md](20_env-vars.md) — environment variables read by scitex-template
 
 ## Architecture notes
 
