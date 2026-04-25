@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scitex-template"
-version = "0.5.1"
+version = "0.6.0"
 description = "Project template cloner + code snippet library for the SciTeX ecosystem — six templates vendored, shallow-cloned on demand to ~/.scitex/template/cache/"
 readme = "README.md"
 license = "AGPL-3.0-only"
@@ -34,6 +34,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
+    "click>=8.0",
     "gitpython",
     "pyyaml",
 ]
@@ -60,7 +61,8 @@ legacy = [
 ]
 
 [project.scripts]
-scitex-template = "scitex_template.mcp_server:main"
+scitex-template = "scitex_template.cli:main"
+scitex-template-mcp = "scitex_template.mcp_server:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/scitex_template"]
