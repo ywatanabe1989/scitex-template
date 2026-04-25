@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/images/scitex-logo-blue-cropped.png" alt="SciTeX" width="400">
+</p>
+
 # SciTeX Template (`scitex-template`)
 
 <p align="center"><b>Project template cloner + code snippet library for the SciTeX ecosystem.</b></p>
@@ -107,5 +111,5 @@ AGPL-3.0-only.
 ---
 
 <p align="center">
-  <a href="https://scitex.ai" target="_blank"><b>SciTeX</b></a>
+  <a href="https://scitex.ai" target="_blank"><img src="docs/assets/images/scitex-icon-navy-inverted.png" alt="SciTeX" width="40"/></a>
 </p>

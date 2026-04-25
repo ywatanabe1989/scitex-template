@@ -38,15 +38,6 @@ except ImportError:  # pragma: no cover
     scitex = None  # type: ignore[assignment]
 
 
-def _require_scitex_git() -> None:
-    if scitex is None:
-        raise ImportError(
-            "The remote-clone fallback requires the scitex umbrella. "
-            "Install with: pip install scitex-template[legacy]  "
-            "(the cache fast-path for registered templates works without it)."
-        )
-
-
 getLogger = logging.getLogger
 
 from .._utils._copy import copy_template
