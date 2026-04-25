@@ -64,6 +64,12 @@ legacy = [
 scitex-template = "scitex_template.cli:main"
 scitex-template-mcp = "scitex_template.mcp_server:main"
 
+[project.entry-points."scitex_dev.docs"]
+scitex-template = "scitex_template"
+
+[project.entry-points."scitex_dev.skills"]
+scitex-template = "scitex_template"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/scitex_template"]
 # templates/ is intentionally NOT in the wheel — the cloner shallow-clones
