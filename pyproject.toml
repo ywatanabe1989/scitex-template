@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scitex-template"
-version = "0.6.2"
+version = "0.6.3"
 description = "Project template cloner + code snippet library for the SciTeX ecosystem — six templates vendored, shallow-cloned on demand to ~/.scitex/template/cache/"
 readme = "README.md"
 license = "AGPL-3.0-only"
@@ -23,7 +23,6 @@ keywords = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
