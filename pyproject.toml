@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scitex-template"
-version = "0.6.0"
+version = "0.6.1"
 description = "Project template cloner + code snippet library for the SciTeX ecosystem — six templates vendored, shallow-cloned on demand to ~/.scitex/template/cache/"
 readme = "README.md"
 license = "AGPL-3.0-only"
@@ -37,6 +37,7 @@ dependencies = [
     "click>=8.0",
     "gitpython",
     "pyyaml",
+    "scitex-config>=0.3.0",
 ]
 
 # scitex.git / scitex.scholar / scitex.writer are still imported by a few
