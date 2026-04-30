@@ -5,6 +5,16 @@
 Template management for SciTeX projects.
 """
 
+try:
+    from importlib.metadata import version as _v, PackageNotFoundError
+    try:
+        __version__ = _v("scitex-template")
+    except PackageNotFoundError:
+        __version__ = "0.0.0+local"
+    del _v, PackageNotFoundError
+except ImportError:  # pragma: no cover — only on ancient Pythons
+    __version__ = "0.0.0+local"
+
 from pathlib import Path
 
 # scitex.git is an optional dep (install via `scitex-template[legacy]`) —

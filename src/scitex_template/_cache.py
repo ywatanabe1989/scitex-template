@@ -16,9 +16,10 @@ from __future__ import annotations
 import shutil
 import subprocess
 from pathlib import Path
+from scitex_config._ecosystem import local_state
 
 MONOREPO_URL = "https://github.com/ywatanabe1989/scitex-template.git"
-CACHE_ROOT = Path.home() / ".scitex" / "template" / "cache"
+CACHE_ROOT = local_state.runtime_path("template", "cache")
 
 
 def ensure_cache(branch: str = "main", force_refresh: bool = False) -> Path:

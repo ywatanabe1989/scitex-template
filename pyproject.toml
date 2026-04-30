@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scitex-template"
-version = "0.6.0"
+version = "0.6.3"
 description = "Project template cloner + code snippet library for the SciTeX ecosystem — six templates vendored, shallow-cloned on demand to ~/.scitex/template/cache/"
 readme = "README.md"
 license = "AGPL-3.0-only"
@@ -23,7 +23,6 @@ keywords = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -37,6 +36,7 @@ dependencies = [
     "click>=8.0",
     "gitpython",
     "pyyaml",
+    "scitex-config>=0.3.0",
 ]
 
 # scitex.git / scitex.scholar / scitex.writer are still imported by a few
@@ -46,19 +46,27 @@ dependencies = [
 # templates needs none of this.
 
 [project.optional-dependencies]
+legacy = [
+    "scitex",
+]
+mcp = [
+    "mcp>=1.0.0",
+]
 dev = [
     "pytest>=7.0",
     "pytest-cov",
     "pytest-asyncio>=0.21",
 ]
-mcp = [
-    "mcp>=1.0.0",
+docs = [
+    "sphinx>=7.0",
+    "sphinx-rtd-theme>=2.0",
+    "myst-parser>=2.0",
+    "sphinx-copybutton>=0.5",
+    "sphinx-autodoc-typehints>=1.25",
 ]
-# Enables legacy cloners that still import scitex.git / scitex.scholar /
-# scitex.writer. The cache fast-path for the 6 vendored templates works
-# without this.
-legacy = [
-    "scitex",
+all = [
+    "scitex-template[legacy]",
+    "scitex-template[mcp]",
 ]
 
 [project.scripts]

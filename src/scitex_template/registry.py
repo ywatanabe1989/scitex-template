@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from scitex_config._ecosystem import local_state
 from typing import Optional
 
 try:
@@ -26,7 +27,7 @@ except ImportError as _e:  # pragma: no cover
     ) from _e
 
 
-CACHE_ROOT = Path.home() / ".scitex" / "template" / "cache"
+CACHE_ROOT = local_state.runtime_path("template", "cache")
 
 
 @dataclass(frozen=True)
