@@ -6,11 +6,14 @@ Subcommands follow the noun-verb convention (general/03_interface_02_cli):
     scitex-template info <id>               # show one template
     scitex-template clone <id> <target>     # populate target from cache
     scitex-template cache-refresh           # force re-clone of monorepo cache
-    scitex-template version                 # print version
+    scitex-template list-python-apis        # introspect public Python API
+    scitex-template mcp list-tools          # introspect MCP tool surface
+    scitex-template mcp start               # launch the MCP server
 """
 
 from __future__ import annotations
 
+import json as _json
 import sys
 from pathlib import Path
 
@@ -26,10 +29,64 @@ def _version() -> str:
         return "unknown"
 
 
-@click.group(context_settings={"help_option_names": ["-h", "--help"]})
-@click.version_option(_version(), "-V", "--version")
-def main() -> None:
-    """scitex-template — clone scitex-* project templates from the monorepo cache."""
+def _show_recursive_help(ctx: click.Context) -> None:
+    """Print help for the root group plus every subcommand recursively."""
+    click.echo(ctx.get_help())
+    click.echo()
+    group = ctx.command
+    if isinstance(group, click.Group):
+        for name in sorted(group.list_commands(ctx)):
+            cmd = group.get_command(ctx, name)
+            if cmd is None or cmd.hidden:
+                continue
+            sub_ctx = click.Context(cmd, parent=ctx, info_name=name)
+            click.echo("=" * 60)
+            click.echo(f"Command: {name}")
+            click.echo("=" * 60)
+            click.echo(sub_ctx.get_help())
+            click.echo()
+            if isinstance(cmd, click.Group):
+                for sub_name in sorted(cmd.list_commands(sub_ctx)):
+                    sub_cmd = cmd.get_command(sub_ctx, sub_name)
+                    if sub_cmd is None or sub_cmd.hidden:
+                        continue
+                    sub_sub_ctx = click.Context(
+                        sub_cmd, parent=sub_ctx, info_name=sub_name
+                    )
+                    click.echo("-" * 60)
+                    click.echo(f"Command: {name} {sub_name}")
+                    click.echo("-" * 60)
+                    click.echo(sub_sub_ctx.get_help())
+                    click.echo()
+
+
+@click.group(
+    context_settings={"help_option_names": ["-h", "--help"]},
+    invoke_without_command=True,
+)
+@click.version_option(_version(), "-V", "--version", prog_name="scitex-template")
+@click.option("--help-recursive", is_flag=True, help="Show help for all subcommands.")
+@click.option(
+    "--json",
+    "as_json",
+    is_flag=True,
+    help="Emit structured JSON output (propagates to subcommands that honour it).",
+)
+@click.pass_context
+def main(ctx: click.Context, help_recursive: bool, as_json: bool) -> None:
+    """scitex-template — clone scitex-* project templates from the monorepo cache.
+
+    \b
+    Config is loaded with the SciTeX precedence chain:
+      config.yaml -> $SCITEX_TEMPLATE_CONFIG -> ~/.scitex/template/config.yaml -> defaults
+    """
+    ctx.ensure_object(dict)
+    ctx.obj["as_json"] = as_json
+    if help_recursive:
+        _show_recursive_help(ctx)
+        ctx.exit(0)
+    elif ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @main.command("list")
@@ -39,14 +96,21 @@ def main() -> None:
     is_flag=True,
     help="Output as JSON instead of a human-readable table.",
 )
-def list_cmd(as_json: bool) -> None:
-    """List all registered templates."""
+@click.pass_context
+def list_cmd(ctx: click.Context, as_json: bool) -> None:
+    """List all registered templates.
+
+    \b
+    Example:
+      $ scitex-template list
+      $ scitex-template list --json
+    """
     from .registry import load_registry
+
+    as_json = as_json or bool(ctx.obj.get("as_json"))
 
     entries = load_registry()
     if as_json:
-        import json as _json
-
         click.echo(
             _json.dumps(
                 [
@@ -70,14 +134,40 @@ def list_cmd(as_json: bool) -> None:
 
 @main.command("info")
 @click.argument("template_id")
-def info_cmd(template_id: str) -> None:
-    """Print details for a single template."""
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON.")
+@click.pass_context
+def info_cmd(ctx: click.Context, template_id: str, as_json: bool) -> None:
+    """Print details for a single template.
+
+    \b
+    Example:
+      $ scitex-template info minimal
+      $ scitex-template info research --json
+    """
     from .registry import find_template
+
+    as_json = as_json or bool(ctx.obj.get("as_json"))
 
     e = find_template(template_id)
     if e is None:
-        click.echo(f"unknown template id: {template_id}", err=True)
+        if as_json:
+            click.echo(_json.dumps({"error": f"unknown template id: {template_id}"}))
+        else:
+            click.echo(f"unknown template id: {template_id}", err=True)
         sys.exit(1)
+    if as_json:
+        click.echo(
+            _json.dumps(
+                {
+                    "id": e.id,
+                    "version": e.version,
+                    "description": e.description,
+                    "path": str(e.path),
+                },
+                indent=2,
+            )
+        )
+        return
     click.echo(f"id          : {e.id}")
     click.echo(f"version     : {e.version}")
     click.echo(f"description : {e.description}")
@@ -98,8 +188,32 @@ def info_cmd(template_id: str) -> None:
     show_default=True,
     help="Branch of the scitex-template monorepo to track in the cache.",
 )
-def clone_cmd(template_id: str, target: Path, force_refresh: bool, branch: str) -> None:
-    """Populate TARGET with the contents of TEMPLATE_ID."""
+@click.option("--dry-run", is_flag=True, help="Print clone plan without writing.")
+@click.option(
+    "-y", "--yes", is_flag=True, help="Suppress interactive confirmation (assume yes)."
+)
+def clone_cmd(
+    template_id: str,
+    target: Path,
+    force_refresh: bool,
+    branch: str,
+    dry_run: bool,
+    yes: bool,
+) -> None:
+    """Populate TARGET with the contents of TEMPLATE_ID.
+
+    \b
+    Example:
+      $ scitex-template clone minimal ./my-paper
+      $ scitex-template clone research ./my-project --branch develop
+      $ scitex-template clone app ./my-app --dry-run
+    """
+    if dry_run:
+        click.echo(
+            f"DRY RUN — would clone template '{template_id}' to {target} "
+            f"(branch={branch}, force_refresh={force_refresh})"
+        )
+        return
     from ._cache import clone_template_from_cache
 
     try:
@@ -117,8 +231,22 @@ def clone_cmd(template_id: str, target: Path, force_refresh: bool, branch: str) 
 
 @main.command("cache-refresh")
 @click.option("--branch", default="main", show_default=True)
-def cache_refresh_cmd(branch: str) -> None:
-    """Force-refresh the ~/.scitex/template/cache/ shallow clone."""
+@click.option("--dry-run", is_flag=True, help="Print refresh plan without writing.")
+@click.option(
+    "-y", "--yes", is_flag=True, help="Suppress interactive confirmation (assume yes)."
+)
+def cache_refresh_cmd(branch: str, dry_run: bool, yes: bool) -> None:
+    """Force-refresh the ~/.scitex/template/cache/ shallow clone.
+
+    \b
+    Example:
+      $ scitex-template cache-refresh
+      $ scitex-template cache-refresh --branch develop
+      $ scitex-template cache-refresh --dry-run
+    """
+    if dry_run:
+        click.echo(f"DRY RUN — would refresh cache (branch={branch})")
+        return
     from ._cache import ensure_cache
 
     root = ensure_cache(branch=branch, force_refresh=True)
@@ -127,8 +255,140 @@ def cache_refresh_cmd(branch: str) -> None:
 
 @main.command("version")
 def version_cmd() -> None:
-    """Print version (same as -V)."""
+    """Print version (same as -V).
+
+    \b
+    Example:
+      $ scitex-template version
+      $ scitex-template -V
+    """
     click.echo(_version())
+
+
+# -- Introspection ----------------------------------------------------------
+
+
+@main.command("list-python-apis")
+@click.option("-v", "--verbose", count=True, help="-v names, -vv +sigs, -vvv +docs")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON.")
+@click.pass_context
+def list_python_apis(ctx: click.Context, verbose: int, as_json: bool) -> None:
+    """List public Python APIs in scitex-template.
+
+    \b
+    Example:
+      $ scitex-template list-python-apis
+      $ scitex-template list-python-apis -vv
+      $ scitex-template list-python-apis --json
+    """
+    import inspect
+
+    import scitex_template
+
+    as_json = as_json or bool(ctx.obj.get("as_json"))
+
+    names = sorted(getattr(scitex_template, "__all__", []))
+    apis = []
+    for name in names:
+        obj = getattr(scitex_template, name, None)
+        if obj is None:
+            continue
+        entry = {"name": name, "type": type(obj).__name__}
+        if callable(obj):
+            try:
+                entry["signature"] = str(inspect.signature(obj))
+            except (TypeError, ValueError):
+                pass
+        doc = inspect.getdoc(obj) or ""
+        if doc:
+            entry["doc"] = doc.strip().split("\n")[0]
+        apis.append(entry)
+
+    if as_json:
+        click.echo(_json.dumps({"module": "scitex_template", "apis": apis}, indent=2))
+        return
+
+    click.secho("scitex_template Python APIs", fg="cyan", bold=True)
+    for api in apis:
+        sig = api.get("signature", "")
+        click.echo(f"  {click.style(api['name'], fg='green')}{sig}")
+        if verbose >= 2 and api.get("doc"):
+            click.echo(f"    {api['doc']}")
+
+
+# -- MCP --------------------------------------------------------------------
+
+
+@main.group(invoke_without_command=True)
+@click.pass_context
+def mcp(ctx: click.Context) -> None:
+    """MCP (Model Context Protocol) server commands."""
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
+
+
+@mcp.command("start")
+@click.option("--dry-run", is_flag=True, help="Print launch plan without starting.")
+@click.option(
+    "-y", "--yes", is_flag=True, help="Suppress interactive confirmation (assume yes)."
+)
+def mcp_start(dry_run: bool, yes: bool) -> None:
+    """Start the scitex-template MCP server.
+
+    \b
+    Example:
+      $ scitex-template mcp start
+      $ scitex-template mcp start --dry-run
+    """
+    if dry_run:
+        click.echo("DRY RUN — would start scitex-template MCP server (stdio transport)")
+        return
+    from scitex_template.mcp_server import main as mcp_main
+
+    mcp_main()
+
+
+@mcp.command("list-tools")
+@click.option("-v", "--verbose", count=True, help="Verbosity: -v +desc, -vv full doc")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON.")
+@click.pass_context
+def mcp_list_tools(ctx: click.Context, verbose: int, as_json: bool) -> None:
+    """List available MCP tools.
+
+    \b
+    Example:
+      $ scitex-template mcp list-tools
+      $ scitex-template mcp list-tools -vv
+      $ scitex-template mcp list-tools --json
+    """
+    from scitex_template._mcp.tool_schemas import get_tool_schemas
+
+    as_json = as_json or bool(ctx.obj.get("as_json"))
+
+    tools = get_tool_schemas()
+
+    if as_json:
+        payload = {
+            "total": len(tools),
+            "tools": [
+                {
+                    "name": getattr(t, "name", str(t)),
+                    "description": getattr(t, "description", "") or "",
+                }
+                for t in tools
+            ],
+        }
+        click.echo(_json.dumps(payload, indent=2))
+        return
+
+    click.secho(f"scitex-template MCP: {len(tools)} tools", fg="cyan", bold=True)
+    for t in sorted(tools, key=lambda x: getattr(x, "name", str(x))):
+        name = getattr(t, "name", str(t))
+        desc = getattr(t, "description", "") or ""
+        click.echo(f"  {name}")
+        if verbose >= 1 and desc:
+            line = desc.split("\n")[0] if verbose == 1 else desc.strip()
+            click.echo(f"    {line}")
 
 
 if __name__ == "__main__":
