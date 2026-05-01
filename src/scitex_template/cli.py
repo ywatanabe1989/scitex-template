@@ -253,16 +253,21 @@ def cache_refresh_cmd(branch: str, dry_run: bool, yes: bool) -> None:
     click.echo(f"refreshed cache at {root}")
 
 
-@main.command("version")
-def version_cmd() -> None:
-    """Print version (same as -V).
-
-    \b
-    Example:
-      $ scitex-template version
-      $ scitex-template -V
-    """
-    click.echo(_version())
+@main.command(
+    "version",
+    hidden=True,
+    context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
+)
+@click.pass_context
+def version_cmd(ctx) -> None:
+    """(deprecated) Use `scitex-template --version` instead."""
+    click.echo(
+        "error: `scitex-template version` was replaced by "
+        "`scitex-template --version`.\n"
+        "Re-run with: scitex-template --version",
+        err=True,
+    )
+    ctx.exit(2)
 
 
 # -- Introspection ----------------------------------------------------------

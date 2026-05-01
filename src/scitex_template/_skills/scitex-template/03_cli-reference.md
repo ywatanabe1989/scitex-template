@@ -68,14 +68,16 @@ scitex-template monorepo shallowly).
 Use when the monorepo has new templates you haven't seen, or to recover
 from a diverged cache.
 
-## `version`
+## `--version` / `-V`
 
 ```
-scitex-template version
+scitex-template --version
 scitex-template -V
 ```
 
-Prints the installed package version.
+Prints the installed package version. The bare `version` subcommand was
+removed (per audit-cli §1b — banned bare leaf); use the `--version` flag
+on the top level instead.
 
 ## Examples
 

@@ -11,7 +11,7 @@ tags: [scitex-template, scitex-package]
 ## Listing Available Templates
 
 ```python
-import scitex as stx
+import scitex
 
 templates = stx.template.list_code_templates()
 # Returns list of dicts: id, name, description, filename, usage
