@@ -1,29 +1,4 @@
 <p align="center">
-  <img src="docs/assets/images/scitex-logo-blue-cropped.png" alt="SciTeX" width="400">
-</p>
-
-# SciTeX Template (`scitex-template`)
-
-<!-- scitex-badges:start -->
-[![PyPI](https://img.shields.io/pypi/v/scitex-template.svg)](https://pypi.org/project/scitex-template/)
-[![Python](https://img.shields.io/pypi/pyversions/scitex-template.svg)](https://pypi.org/project/scitex-template/)
-[![Tests](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml/badge.svg)](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml)
-[![Install Test](https://github.com/ywatanabe1989/scitex-template/actions/workflows/install-test.yml/badge.svg)](https://github.com/ywatanabe1989/scitex-template/actions/workflows/install-test.yml)
-[![Coverage](https://codecov.io/gh/ywatanabe1989/scitex-template/graph/badge.svg)](https://codecov.io/gh/ywatanabe1989/scitex-template)
-[![Docs](https://readthedocs.org/projects/scitex-template/badge/?version=latest)](https://scitex-template.readthedocs.io/en/latest/)
-[![License: AGPL v3](https://img.shields.io/badge/license-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-<!-- scitex-badges:end -->
-
-
-<p align="center"><b>Project template cloner + code snippet library for the SciTeX ecosystem.</b></p>
-
-<p align="center">
-  <a href="https://badge.fury.io/py/scitex-template"><img src="https://badge.fury.io/py/scitex-template.svg" alt="PyPI version"></a>
-  <a href="https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml"><img src="https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
-  <a href="https://www.gnu.org/licenses/agpl-3.0"><img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License: AGPL-3.0"></a>
-</p>
-
-<p align="center">
   <code>pip install scitex-template</code> · <code>pip install scitex[template]</code>
 </p>
 
