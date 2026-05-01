@@ -38,7 +38,7 @@ print(get_code_template("session"))
 
 ## 3 Interfaces
 
-<details>
+<details open>
 <summary><strong>Python API</strong></summary>
 
 <br>
