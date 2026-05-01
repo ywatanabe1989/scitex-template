@@ -122,7 +122,9 @@ AGPL-3.0-only.
 
 ## Part of SciTeX
 
-`scitex-template` is part of [**SciTeX**](https://scitex.ai).
+`scitex-template` is part of [**SciTeX**](https://scitex.ai). Install via
+the umbrella with `pip install scitex[template]` to use as
+`scitex.template` (Python) or `scitex template ...` (CLI).
 
 > Four Freedoms for Research
 >
