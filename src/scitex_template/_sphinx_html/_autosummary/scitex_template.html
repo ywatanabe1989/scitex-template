@@ -678,13 +678,11 @@ Mutually exclusive with branch parameter.</p></li>
 <dt class="sig sig-object py" id="scitex_template.setup_scholar_writer_integration">
 <span class="sig-prename descclassname"><span class="pre">scitex_template.</span></span><span class="sig-name descname"><span class="pre">setup_scholar_writer_integration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/scitex_template/_project/_scholar_writer_integration.html#setup_scholar_writer_integration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scitex_template.setup_scholar_writer_integration" title="Link to this definition"></a></dt>
 <dd><p>Set up scholar-writer integration structure with symlinks.</p>
-<p>Handles two project layouts:
-1. Standalone writer (flat): 00_shared/ at project root</p>
-<blockquote>
-<div><p>Creates: scholar/bib_files/
-Symlink: 00_shared/bib_files/merged_scholar.bib</p>
-</div></blockquote>
-<ol class="arabic simple" start="2">
+<p>Handles two project layouts:</p>
+<ol class="arabic simple">
+<li><p>Standalone writer (flat): 00_shared/ at project root
+Creates: scholar/bib_files/
+Symlink: 00_shared/bib_files/merged_scholar.bib</p></li>
 <li><p>Nested writer (scitex ecosystem): scitex/writer/00_shared/
 Creates: scitex/scholar/bib_files/
 Symlink: scitex/writer/00_shared/bib_files/merged_scholar.bib</p></li>

@@ -98,7 +98,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
@@ -117,6 +117,7 @@
 <span class="sd">    Set up scholar-writer integration structure with symlinks.</span>
 
 <span class="sd">    Handles two project layouts:</span>
+
 <span class="sd">    1. Standalone writer (flat): 00_shared/ at project root</span>
 <span class="sd">       Creates: scholar/bib_files/</span>
 <span class="sd">       Symlink: 00_shared/bib_files/merged_scholar.bib</span>
@@ -149,7 +150,9 @@
         <span class="n">project_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
 
         <span class="c1"># Detect project layout</span>
-        <span class="n">nested_writer_bib</span> <span class="o">=</span> <span class="n">project_path</span> <span class="o">/</span> <span class="s2">&quot;scitex&quot;</span> <span class="o">/</span> <span class="s2">&quot;writer&quot;</span> <span class="o">/</span> <span class="s2">&quot;00_shared&quot;</span> <span class="o">/</span> <span class="s2">&quot;bib_files&quot;</span>
+        <span class="n">nested_writer_bib</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">project_path</span> <span class="o">/</span> <span class="s2">&quot;scitex&quot;</span> <span class="o">/</span> <span class="s2">&quot;writer&quot;</span> <span class="o">/</span> <span class="s2">&quot;00_shared&quot;</span> <span class="o">/</span> <span class="s2">&quot;bib_files&quot;</span>
+        <span class="p">)</span>
         <span class="n">standalone_writer_bib</span> <span class="o">=</span> <span class="n">project_path</span> <span class="o">/</span> <span class="s2">&quot;00_shared&quot;</span> <span class="o">/</span> <span class="s2">&quot;bib_files&quot;</span>
 
         <span class="k">if</span> <span class="n">nested_writer_bib</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
@@ -178,9 +181,8 @@
 
         <span class="c1"># Create symlink from writer to scholar</span>
         <span class="n">writer_scholar_link</span> <span class="o">=</span> <span class="n">writer_bib_dir</span> <span class="o">/</span> <span class="s2">&quot;merged_scholar.bib&quot;</span>
-        <span class="n">should_create</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">force</span>
-            <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">writer_scholar_link</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">writer_scholar_link</span><span class="o">.</span><span class="n">is_symlink</span><span class="p">())</span>
+        <span class="n">should_create</span> <span class="o">=</span> <span class="n">force</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="n">writer_scholar_link</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">writer_scholar_link</span><span class="o">.</span><span class="n">is_symlink</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">should_create</span><span class="p">:</span>
