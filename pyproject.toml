@@ -79,6 +79,12 @@ scitex-template = "scitex_template"
 [project.entry-points."scitex_dev.skills"]
 scitex-template = "scitex_template"
 
+[project.urls]
+Homepage = "https://github.com/ywatanabe1989/scitex-template"
+Documentation = "https://scitex-template.readthedocs.io"
+Repository = "https://github.com/ywatanabe1989/scitex-template"
+Issues = "https://github.com/ywatanabe1989/scitex-template/issues"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/scitex_template"]
 # templates/ is intentionally NOT in the wheel — the cloner shallow-clones

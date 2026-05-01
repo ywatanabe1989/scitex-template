@@ -1,3 +1,20 @@
+# scitex-template
+
+<!-- scitex-badges:start -->
+[![PyPI](https://img.shields.io/pypi/v/scitex-template.svg)](https://pypi.org/project/scitex-template/)
+[![Python](https://img.shields.io/pypi/pyversions/scitex-template.svg)](https://pypi.org/project/scitex-template/)
+[![Tests](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml/badge.svg)](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml)
+[![Coverage](https://codecov.io/gh/ywatanabe1989/scitex-template/graph/badge.svg)](https://codecov.io/gh/ywatanabe1989/scitex-template)
+[![Docs](https://readthedocs.org/projects/scitex-template/badge/?version=latest)](https://scitex-template.readthedocs.io/en/latest/)
+[![License: AGPL v3](https://img.shields.io/badge/license-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+<!-- scitex-badges:end -->
+
+<p align="center">
+  <a href="https://scitex.ai">
+    <img src="docs/scitex-logo-blue-cropped.png" alt="SciTeX" width="400">
+  </a>
+</p>
+
 <p align="center">
   <code>pip install scitex-template</code> · <code>pip install scitex[template]</code>
 </p>
