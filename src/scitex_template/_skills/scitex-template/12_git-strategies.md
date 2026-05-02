@@ -1,5 +1,7 @@
 ---
 description: Control how git is initialized in newly cloned project templates — isolated child repo, parent repo integration, preserved template history, or no git.
+name: git-strategies
+tags: [scitex-template, scitex-package]
 ---
 
 # Git Strategies

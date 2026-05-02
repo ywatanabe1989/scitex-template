@@ -1,26 +1,18 @@
-<p align="center">
-  <img src="docs/assets/images/scitex-logo-blue-cropped.png" alt="SciTeX" width="400">
-</p>
-
-# SciTeX Template (`scitex-template`)
+# scitex-template
 
 <!-- scitex-badges:start -->
 [![PyPI](https://img.shields.io/pypi/v/scitex-template.svg)](https://pypi.org/project/scitex-template/)
 [![Python](https://img.shields.io/pypi/pyversions/scitex-template.svg)](https://pypi.org/project/scitex-template/)
 [![Tests](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml/badge.svg)](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml)
-[![Install Test](https://github.com/ywatanabe1989/scitex-template/actions/workflows/install-test.yml/badge.svg)](https://github.com/ywatanabe1989/scitex-template/actions/workflows/install-test.yml)
 [![Coverage](https://codecov.io/gh/ywatanabe1989/scitex-template/graph/badge.svg)](https://codecov.io/gh/ywatanabe1989/scitex-template)
 [![Docs](https://readthedocs.org/projects/scitex-template/badge/?version=latest)](https://scitex-template.readthedocs.io/en/latest/)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 <!-- scitex-badges:end -->
 
-
-<p align="center"><b>Project template cloner + code snippet library for the SciTeX ecosystem.</b></p>
-
 <p align="center">
-  <a href="https://badge.fury.io/py/scitex-template"><img src="https://badge.fury.io/py/scitex-template.svg" alt="PyPI version"></a>
-  <a href="https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml"><img src="https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
-  <a href="https://www.gnu.org/licenses/agpl-3.0"><img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License: AGPL-3.0"></a>
+  <a href="https://scitex.ai">
+    <img src="docs/scitex-logo-blue-cropped.png" alt="SciTeX" width="400">
+  </a>
 </p>
 
 <p align="center">
@@ -29,13 +21,12 @@
 
 ---
 
-## Problem
+## Problem and Solution
 
-SciTeX ecosystem users need starting points for three distinct project kinds — a minimal scitex-* package, a full research project, a cloud-module plugin — plus boilerplate for pip projects, LaTeX manuscripts, singularity containers. Each of those template repos evolves independently, and the glue code that clones them (`clone_research`, `clone_pip_project`, …) has historically lived buried inside `scitex-python` where its release cadence doesn't match.
-
-## Solution
-
-`scitex-template` is the standalone cloner. One install gives you every `clone_*` function, the code-snippet library for scitex idioms (session decorator, io save/load, plt subplots, …), the project-config generators (`create_project_config`, `build_directory_tree`), and the MCP server that exposes the same operations to agents.
+| # | Problem | Solution |
+|---|---------|----------|
+| 1 | **Six template repos evolving independently** — minimal scitex-* package, research project, cloud-module plugin, pip project, LaTeX manuscript, singularity container | **One vendored monorepo + cloner** — `pip install scitex-template` ships every `clone_*` function, plus a code-snippet library for scitex idioms (session decorator, io save/load, plt subplots) |
+| 2 | **Cloner code buried in `scitex-python`** — release cadence didn't match the templates' | **Standalone cloner** — independent versioning, lazy umbrella imports, MCP server that exposes the same ops to agents |
 
 ## Installation
 
@@ -47,7 +38,27 @@ pip install scitex-template[dev]         # pytest + coverage
 
 The umbrella route also works — `pip install scitex[template]` pulls this package transitively.
 
-## Python usage
+## Quick Start
+
+```bash
+pip install scitex-template
+scitex-template list-templates
+scitex-template clone research ./my-experiment
+```
+
+```python
+from scitex_template import clone_research, get_code_template
+
+clone_research(target="my-experiment", project_name="my-experiment")
+print(get_code_template("session"))
+```
+
+## 3 Interfaces
+
+<details open>
+<summary><strong>Python API</strong></summary>
+
+<br>
 
 ```python
 import scitex  # noqa: F401 — ensures scitex.git / .logging are importable
@@ -73,15 +84,35 @@ print(get_code_template("session"))
 
 The legacy import path `from scitex.template import …` also still works via a compatibility shim in `scitex-python`.
 
-## CLI
+</details>
+
+<details>
+<summary><strong>CLI</strong></summary>
+
+<br>
 
 Entry point: `scitex-template` (also `python -m scitex_template`).
 
 ```bash
-scitex-template                           # starts MCP server
+scitex-template list-templates             # enumerate templates
+scitex-template show-info research         # template metadata
+scitex-template clone research ./my-proj   # populate from cache
+scitex-template refresh-cache              # force re-clone
 ```
 
-CLI parity with the Python API is planned; for now the cloners are invoked programmatically.
+</details>
+
+<details>
+<summary><strong>MCP Server — for AI Agents</strong></summary>
+
+<br>
+
+Install with `pip install scitex-template[mcp]` and the package exposes
+async handlers (`template_list`, `template_info`, `template_clone`,
+`template_cache_refresh`) over MCP — agents can scaffold projects without
+running Python themselves.
+
+</details>
 
 ## Template repos
 
@@ -108,7 +139,9 @@ AGPL-3.0-only.
 
 ## Part of SciTeX
 
-`scitex-template` is part of [**SciTeX**](https://scitex.ai).
+`scitex-template` is part of [**SciTeX**](https://scitex.ai). Install via
+the umbrella with `pip install scitex[template]` to use as
+`scitex.template` (Python) or `scitex template ...` (CLI).
 
 > Four Freedoms for Research
 >

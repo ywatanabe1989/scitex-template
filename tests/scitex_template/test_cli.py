@@ -15,7 +15,7 @@ def runner():
 
 class TestList:
     def test_human_output(self, runner):
-        result = runner.invoke(main, ["list"])
+        result = runner.invoke(main, ["list-templates"])
         assert result.exit_code == 0
         for tid in (
             "pip-project",
@@ -28,7 +28,7 @@ class TestList:
             assert tid in result.output
 
     def test_json_output(self, runner):
-        result = runner.invoke(main, ["list", "--json"])
+        result = runner.invoke(main, ["list-templates", "--json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
         ids = {row["id"] for row in data}
@@ -37,13 +37,13 @@ class TestList:
 
 class TestInfo:
     def test_known_id(self, runner):
-        result = runner.invoke(main, ["info", "pip-project"])
+        result = runner.invoke(main, ["show-info", "pip-project"])
         assert result.exit_code == 0
         assert "pip-project" in result.output
         assert "version" in result.output.lower() or "0.1.0" in result.output
 
     def test_unknown_id(self, runner):
-        result = runner.invoke(main, ["info", "does-not-exist"])
+        result = runner.invoke(main, ["show-info", "does-not-exist"])
         assert result.exit_code == 1
 
 

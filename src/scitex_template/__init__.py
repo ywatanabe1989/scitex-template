@@ -5,6 +5,8 @@
 Template management for SciTeX projects.
 """
 
+from __future__ import annotations
+
 try:
     from importlib.metadata import version as _v, PackageNotFoundError
     try:
@@ -217,6 +219,7 @@ def get_available_templates_info():
 
 
 __all__ = [
+    "__version__",
     "clone_template",
     "clone_module",
     "clone_research",

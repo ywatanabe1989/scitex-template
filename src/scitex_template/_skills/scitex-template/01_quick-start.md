@@ -10,7 +10,7 @@ tags: [scitex-template, scitex-package]
 pip install scitex-template
 
 # See what's available
-scitex-template list
+scitex-template list-templates
 
 # Clone one
 scitex-template clone research ./my-experiment
