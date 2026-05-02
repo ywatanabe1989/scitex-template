@@ -114,12 +114,12 @@
   <section id="module-scitex_template.cli">
 <span id="scitex-template-cli"></span><h1>scitex_template.cli<a class="headerlink" href="#module-scitex_template.cli" title="Link to this heading"></a></h1>
 <p>CLI for scitex-template.</p>
-<p>Subcommands follow the noun-verb convention (general/03_interface_02_cli):</p>
+<p>Subcommands follow the verb-noun convention (general/03_interface_02_cli):</p>
 <blockquote>
-<div><p>scitex-template list                    # list registered templates
-scitex-template info &lt;id&gt;               # show one template
+<div><p>scitex-template list-templates          # list registered templates
+scitex-template show-info &lt;id&gt;          # show one template
 scitex-template clone &lt;id&gt; &lt;target&gt;     # populate target from cache
-scitex-template cache-refresh           # force re-clone of monorepo cache
+scitex-template refresh-cache           # force re-clone of monorepo cache
 scitex-template list-python-apis        # introspect public Python API
 scitex-template mcp list-tools          # introspect MCP tool surface
 scitex-template mcp start               # launch the MCP server</p>
