@@ -1,11 +1,11 @@
 """CLI for scitex-template.
 
-Subcommands follow the noun-verb convention (general/03_interface_02_cli):
+Subcommands follow the verb-noun convention (general/03_interface_02_cli):
 
-    scitex-template list                    # list registered templates
-    scitex-template info <id>               # show one template
+    scitex-template list-templates          # list registered templates
+    scitex-template show-info <id>          # show one template
     scitex-template clone <id> <target>     # populate target from cache
-    scitex-template cache-refresh           # force re-clone of monorepo cache
+    scitex-template refresh-cache           # force re-clone of monorepo cache
     scitex-template list-python-apis        # introspect public Python API
     scitex-template mcp list-tools          # introspect MCP tool surface
     scitex-template mcp start               # launch the MCP server
@@ -89,7 +89,7 @@ def main(ctx: click.Context, help_recursive: bool, as_json: bool) -> None:
         click.echo(ctx.get_help())
 
 
-@main.command("list")
+@main.command("list-templates")
 @click.option(
     "--json",
     "as_json",
@@ -102,8 +102,8 @@ def list_cmd(ctx: click.Context, as_json: bool) -> None:
 
     \b
     Example:
-      $ scitex-template list
-      $ scitex-template list --json
+      $ scitex-template list-templates
+      $ scitex-template list-templates --json
     """
     from .registry import load_registry
 
@@ -132,7 +132,7 @@ def list_cmd(ctx: click.Context, as_json: bool) -> None:
         click.echo(f"  {e.id:<{width}}  v{e.version}  {e.description}")
 
 
-@main.command("info")
+@main.command("show-info")
 @click.argument("template_id")
 @click.option("--json", "as_json", is_flag=True, help="Output as JSON.")
 @click.pass_context
@@ -141,8 +141,8 @@ def info_cmd(ctx: click.Context, template_id: str, as_json: bool) -> None:
 
     \b
     Example:
-      $ scitex-template info minimal
-      $ scitex-template info research --json
+      $ scitex-template show-info minimal
+      $ scitex-template show-info research --json
     """
     from .registry import find_template
 
@@ -229,7 +229,7 @@ def clone_cmd(
     click.echo(f"cloned {template_id} → {out}")
 
 
-@main.command("cache-refresh")
+@main.command("refresh-cache")
 @click.option("--branch", default="main", show_default=True)
 @click.option("--dry-run", is_flag=True, help="Print refresh plan without writing.")
 @click.option(
@@ -240,9 +240,9 @@ def cache_refresh_cmd(branch: str, dry_run: bool, yes: bool) -> None:
 
     \b
     Example:
-      $ scitex-template cache-refresh
-      $ scitex-template cache-refresh --branch develop
-      $ scitex-template cache-refresh --dry-run
+      $ scitex-template refresh-cache
+      $ scitex-template refresh-cache --branch develop
+      $ scitex-template refresh-cache --dry-run
     """
     if dry_run:
         click.echo(f"DRY RUN — would refresh cache (branch={branch})")
@@ -265,6 +265,60 @@ def version_cmd(ctx) -> None:
         "error: `scitex-template version` was replaced by "
         "`scitex-template --version`.\n"
         "Re-run with: scitex-template --version",
+        err=True,
+    )
+    ctx.exit(2)
+
+
+# -- Deprecated aliases (hidden, exit non-zero with redirect message) ------
+
+
+@main.command(
+    "list",
+    hidden=True,
+    context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
+)
+@click.pass_context
+def _deprecated_list(ctx) -> None:
+    """(deprecated) renamed to `list-templates`."""
+    click.echo(
+        "error: `scitex-template list` was renamed to "
+        "`scitex-template list-templates`.\n"
+        "Re-run with: scitex-template list-templates",
+        err=True,
+    )
+    ctx.exit(2)
+
+
+@main.command(
+    "info",
+    hidden=True,
+    context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
+)
+@click.pass_context
+def _deprecated_info(ctx) -> None:
+    """(deprecated) renamed to `show-info`."""
+    click.echo(
+        "error: `scitex-template info` was renamed to "
+        "`scitex-template show-info`.\n"
+        "Re-run with: scitex-template show-info <id>",
+        err=True,
+    )
+    ctx.exit(2)
+
+
+@main.command(
+    "cache-refresh",
+    hidden=True,
+    context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
+)
+@click.pass_context
+def _deprecated_cache_refresh(ctx) -> None:
+    """(deprecated) renamed to `refresh-cache`."""
+    click.echo(
+        "error: `scitex-template cache-refresh` was renamed to "
+        "`scitex-template refresh-cache`.\n"
+        "Re-run with: scitex-template refresh-cache",
         err=True,
     )
     ctx.exit(2)

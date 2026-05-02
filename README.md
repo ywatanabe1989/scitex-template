@@ -42,7 +42,7 @@ The umbrella route also works — `pip install scitex[template]` pulls this pack
 
 ```bash
 pip install scitex-template
-scitex-template list
+scitex-template list-templates
 scitex-template clone research ./my-experiment
 ```
 
@@ -94,10 +94,10 @@ The legacy import path `from scitex.template import …` also still works via a 
 Entry point: `scitex-template` (also `python -m scitex_template`).
 
 ```bash
-scitex-template list                       # enumerate templates
-scitex-template info research              # template metadata
+scitex-template list-templates             # enumerate templates
+scitex-template show-info research         # template metadata
 scitex-template clone research ./my-proj   # populate from cache
-scitex-template cache-refresh              # force re-clone
+scitex-template refresh-cache              # force re-clone
 ```
 
 </details>

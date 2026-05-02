@@ -1,6 +1,6 @@
 ---
 name: cli-reference
-description: Every scitex-template CLI subcommand — list, info, clone, cache-refresh, version — with flags, exit codes, and output format.
+description: Every scitex-template CLI subcommand — list-templates, show-info, clone, refresh-cache, version — with flags, exit codes, and output format.
 tags: [scitex-template, scitex-package]
 ---
 
@@ -12,10 +12,10 @@ Entry point: `scitex-template` (also `python -m scitex_template.cli`).
 scitex-template [-h|--help] [-V|--version] COMMAND [ARGS...]
 ```
 
-## `list`
+## `list-templates`
 
 ```
-scitex-template list [--json]
+scitex-template list-templates [--json]
 ```
 
 Enumerate registered templates.
@@ -25,12 +25,12 @@ Enumerate registered templates.
 
 Exit code: 0.
 
-## `info <template_id>`
+## `show-info <template_id>`
 
 Show metadata for a single template.
 
 ```
-scitex-template info research
+scitex-template show-info research
 ```
 
 Prints `id`, `version`, `description`, `path`.
@@ -56,10 +56,10 @@ Flags:
 
 Exit codes: 0 success, 1 unknown id, 2 target exists and non-empty.
 
-## `cache-refresh`
+## `refresh-cache`
 
 ```
-scitex-template cache-refresh [--branch main]
+scitex-template refresh-cache [--branch main]
 ```
 
 Force-refresh `~/.scitex/template/cache/` (wipes it, re-clones the
@@ -79,6 +79,17 @@ Prints the installed package version. The bare `version` subcommand was
 removed (per audit-cli §1b — banned bare leaf); use the `--version` flag
 on the top level instead.
 
+## Deprecated aliases
+
+The following names exit non-zero with a redirect message and will be
+removed in a future release:
+
+| old | new |
+|---|---|
+| `list` | `list-templates` |
+| `info` | `show-info` |
+| `cache-refresh` | `refresh-cache` |
+
 ## Examples
 
 ```bash
@@ -93,5 +104,5 @@ cd ~/proj/scitex-foo
 pip install -e .
 
 # List everything, machine-readable
-scitex-template list --json | jq '.[] | .id'
+scitex-template list-templates --json | jq '.[] | .id'
 ```

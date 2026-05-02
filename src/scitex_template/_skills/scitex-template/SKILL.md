@@ -30,10 +30,10 @@ stays ~100 KB; content populated on first use by a shallow-clone into
 ## Public surface
 
 ```bash
-scitex-template list                      # enumerate templates
-scitex-template info research             # one template's metadata
+scitex-template list-templates            # enumerate templates
+scitex-template show-info research        # one template's metadata
 scitex-template clone research ./my-proj  # populate from cache
-scitex-template cache-refresh             # re-clone monorepo
+scitex-template refresh-cache             # re-clone monorepo
 ```
 
 ```python
