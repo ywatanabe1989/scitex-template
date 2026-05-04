@@ -1,6 +1,14 @@
 ---
 name: scitex-template
-description: Project scaffolding cloner + code snippet library for the SciTeX ecosystem. 6 templates (pip-project, minimal, cloud-module, research, singularity, paper) vendored in a single monorepo, populated into user targets via `~/.scitex/template/cache/` shallow-clone. Exposes Python API, CLI (`scitex-template clone <id> <target>`), and MCP tools.
+description: |
+  [WHAT] Project scaffolding cloner + code snippet library for the SciTeX
+  ecosystem — 6 templates (pip-project, minimal, cloud-module, research,
+  singularity, paper) vendored in a single monorepo and populated into user
+  targets via a `~/.scitex/template/cache/` shallow-clone.
+  [WHEN] Starting a new SciTeX-flavored project (pip package, research repo,
+  paper, container, or cloud module) and you want the canonical layout.
+  [HOW] `scitex-template clone <id> <target>`, or `from scitex_template
+  import clone_template_from_cache`. MCP: `template_clone`, `template_list`.
 user-invocable: false
 tags: [scitex-template]
 invocation:
@@ -49,8 +57,9 @@ MCP tools: `template_list`, `template_info`, `template_clone`,
 
 ## Sub-skills
 
-- [01_quick-start.md](01_quick-start.md), [02_python-api.md](02_python-api.md),
-  [03_cli-reference.md](03_cli-reference.md), [04_mcp-tools.md](04_mcp-tools.md)
+- [01_installation.md](01_installation.md), [02_quick-start.md](02_quick-start.md),
+  [03_python-api.md](03_python-api.md), [04_cli-reference.md](04_cli-reference.md),
+  [05_mcp-tools.md](05_mcp-tools.md)
 - [10_project-templates.md](10_project-templates.md),
   [11_code-templates.md](11_code-templates.md),
   [12_git-strategies.md](12_git-strategies.md),
