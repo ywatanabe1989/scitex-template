@@ -1,7 +1,8 @@
 ---
-name: cli-reference
-description: Every scitex-template CLI subcommand — list-templates, show-info, clone, refresh-cache, version — with flags, exit codes, and output format.
-tags: [scitex-template, scitex-package]
+description: |
+  [TOPIC] Cli Reference
+  [DETAILS] Every scitex-template CLI subcommand — list-templates, show-info, clone, refresh-cache, version — with flags, exit codes, and output format.
+tags: [scitex-template-cli-reference, scitex-template, scitex-package]
 ---
 
 # CLI reference

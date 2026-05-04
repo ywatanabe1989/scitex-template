@@ -1,7 +1,8 @@
 ---
-description: Retrieve ready-to-use Python code snippets for @stx.session scripts, I/O, config, modules, and each major stx module (plt, stats, scholar, etc.).
-name: code-templates
-tags: [scitex-template, scitex-package]
+description: |
+  [TOPIC] Code Templates
+  [DETAILS] Retrieve ready-to-use Python code snippets for @stx.session scripts, I/O, config, modules, and each major stx module (plt, stats, scholar, etc.).
+tags: [scitex-template-code-templates, scitex-template, scitex-package]
 ---
 
 # Code Templates

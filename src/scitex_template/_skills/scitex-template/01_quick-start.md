@@ -1,7 +1,8 @@
 ---
-name: quick-start
-description: Minute-long introduction to scitex-template — install, list the 6 templates, clone one. Points at the other skills for details.
-tags: [scitex-template, scitex-package]
+description: |
+  [TOPIC] Quick Start
+  [DETAILS] Minute-long introduction to scitex-template — install, list the 6 templates, clone one. Points at the other skills for details.
+tags: [scitex-template-quick-start, scitex-template, scitex-package]
 ---
 
 # Quick start

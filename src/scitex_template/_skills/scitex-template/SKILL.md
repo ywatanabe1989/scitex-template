@@ -2,7 +2,7 @@
 name: scitex-template
 description: Project scaffolding cloner + code snippet library for the SciTeX ecosystem. 6 templates (pip-project, minimal, cloud-module, research, singularity, paper) vendored in a single monorepo, populated into user targets via `~/.scitex/template/cache/` shallow-clone. Exposes Python API, CLI (`scitex-template clone <id> <target>`), and MCP tools.
 user-invocable: false
-tags: [scitex-template, scitex-package]
+tags: [scitex-template]
 invocation:
   - "clone a scitex research template"
   - "create a new scitex-* package skeleton"

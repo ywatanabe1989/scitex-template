@@ -1,7 +1,8 @@
 ---
-name: mcp-tools
-description: scitex-template exposes its CLI surface as MCP tools so agents can enumerate and clone templates without shell access.
-tags: [scitex-template, scitex-package]
+description: |
+  [TOPIC] Mcp Tools
+  [DETAILS] scitex-template exposes its CLI surface as MCP tools so agents can enumerate and clone templates without shell access.
+tags: [scitex-template-mcp-tools, scitex-template, scitex-package]
 ---
 
 # MCP tools

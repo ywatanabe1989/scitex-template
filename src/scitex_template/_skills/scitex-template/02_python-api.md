@@ -1,7 +1,8 @@
 ---
-name: python-api
-description: Complete public Python API of scitex-template — the cache-based clone path (primary), the legacy per-template clone_* functions (still exported for back-compat), registry enumeration, code-snippet helpers, config generators.
-tags: [scitex-template, scitex-package]
+description: |
+  [TOPIC] Python Api
+  [DETAILS] Complete public Python API of scitex-template — the cache-based clone path (primary), the legacy per-template clone_* functions (still exported for back-compat), registry enumeration, code-snippet helpers, config generators.
+tags: [scitex-template-python-api, scitex-template, scitex-package]
 ---
 
 # Python API
