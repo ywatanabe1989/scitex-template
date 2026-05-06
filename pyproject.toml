@@ -46,9 +46,11 @@ dependencies = [
 # templates needs none of this.
 
 [project.optional-dependencies]
-legacy = [
-    "scitex",
-]
+# Legacy cloners (clone_scitex_minimal, clone_module, clone_app, clone_project
+# remote-fallback path) historically required the umbrella `scitex` package.
+# Per PS139 (no umbrella in standalone pyproject), install scitex separately:
+# `pip install scitex` alongside `pip install scitex-template[legacy]`.
+legacy = []
 mcp = [
     "mcp>=1.0.0",
 ]
@@ -57,7 +59,6 @@ dev = [
     "pytest-asyncio>=0.21",
     "pytest-cov",
     "pytest>=7.0",
-    "scitex",
 ]
 docs = [
     "sphinx>=7.0",
