@@ -23,7 +23,7 @@ from pathlib import Path
 # re-export when available, otherwise expose stubs that raise a clear
 # ImportError if called. Keeps the standalone install import-clean.
 try:
-    from scitex.git import (  # type: ignore[import-not-found]
+    from scitex_git import (  # type: ignore[import-not-found]
         create_child_git,
         find_parent_git,
         init_git_repo,
@@ -108,7 +108,7 @@ def get_template_tree(template_id):
     import tempfile
 
     try:
-        from scitex.scholar.ensure_workspace import SCHOLAR_SUBDIRS  # type: ignore[import-not-found]
+        from scitex_scholar.ensure_workspace import SCHOLAR_SUBDIRS  # type: ignore[import-not-found]
     except ImportError:
         # scitex.scholar is optional (scitex-template[legacy]) — fall back
         # to a hardcoded list matching the scholar workspace convention.
