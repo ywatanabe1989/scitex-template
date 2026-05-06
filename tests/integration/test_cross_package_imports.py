@@ -17,11 +17,12 @@ import pytest
 CROSS_PACKAGE_IMPORTS = [
     'scitex',
     'scitex.git',
-    'scitex.scholar',
-    'scitex.scholar.ensure_workspace',
-    'scitex.writer',
     'scitex_config._ecosystem',
     'scitex_dev._cli._completion',
+    'scitex_git',
+    'scitex_scholar',
+    'scitex_scholar.ensure_workspace',
+    'scitex_writer',
 ]
 # ===== END AUTO-GENERATED =====
 
