@@ -97,7 +97,7 @@
 <span class="c1"># re-export when available, otherwise expose stubs that raise a clear</span>
 <span class="c1"># ImportError if called. Keeps the standalone install import-clean.</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">scitex.git</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># type: ignore[import-not-found]</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scitex_git</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># type: ignore[import-not-found]</span>
         <span class="n">create_child_git</span><span class="p">,</span>
         <span class="n">find_parent_git</span><span class="p">,</span>
         <span class="n">init_git_repo</span><span class="p">,</span>
@@ -182,7 +182,7 @@
     <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">scitex.scholar.ensure_workspace</span><span class="w"> </span><span class="kn">import</span> <span class="n">SCHOLAR_SUBDIRS</span>  <span class="c1"># type: ignore[import-not-found]</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">scitex_scholar.ensure_workspace</span><span class="w"> </span><span class="kn">import</span> <span class="n">SCHOLAR_SUBDIRS</span>  <span class="c1"># type: ignore[import-not-found]</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="c1"># scitex.scholar is optional (scitex-template[legacy]) — fall back</span>
         <span class="c1"># to a hardcoded list matching the scholar workspace convention.</span>
