@@ -53,9 +53,11 @@ mcp = [
     "mcp>=1.0.0",
 ]
 dev = [
-    "pytest>=7.0",
-    "pytest-cov",
+    "mcp>=1.0.0",
     "pytest-asyncio>=0.21",
+    "pytest-cov",
+    "pytest>=7.0",
+    "scitex",
 ]
 docs = [
     "sphinx>=7.0",
