@@ -450,5 +450,68 @@ def mcp_list_tools(ctx: click.Context, verbose: int, as_json: bool) -> None:
             click.echo(f"    {line}")
 
 
+@mcp.command("doctor")
+def mcp_doctor() -> None:
+    """Check MCP server dependencies.
+
+    \b
+    Example:
+      $ scitex-template mcp doctor
+    """
+    click.secho("Checking MCP dependencies...", fg="cyan")
+
+    try:
+        import fastmcp
+
+        click.secho("  OK ", fg="green", nl=False)
+        click.echo(f"fastmcp {fastmcp.__version__}")
+    except ImportError:
+        click.secho("  NG ", fg="red", nl=False)
+        click.echo("fastmcp not installed")
+        click.echo("     Install: pip install scitex-template[mcp]")
+        return
+
+    try:
+        from scitex_template._mcp.tool_schemas import get_tool_schemas
+
+        n_tools = len(get_tool_schemas())
+        click.secho("  OK ", fg="green", nl=False)
+        click.echo(f"scitex-template MCP server ({n_tools} tools)")
+    except Exception as exc:
+        click.secho("  NG ", fg="red", nl=False)
+        click.echo(f"MCP server error: {exc}")
+        return
+
+    click.secho("\nMCP server ready.", fg="green")
+    click.echo("Run: scitex-template mcp start")
+
+
+@mcp.command("install")
+@click.option("--claude-code", is_flag=True, help="Show Claude Code config.")
+def mcp_install(claude_code: bool) -> None:
+    """Show MCP installation instructions.
+
+    \b
+    Example:
+      $ scitex-template mcp install
+      $ scitex-template mcp install --claude-code
+    """
+    if claude_code:
+        click.secho("Add to Claude Code MCP config:", fg="cyan")
+        click.echo()
+        click.echo('  "scitex-template": {')
+        click.echo('    "command": "scitex-template",')
+        click.echo('    "args": ["mcp", "start"]')
+        click.echo("  }")
+        return
+
+    click.secho("scitex-template MCP Server Installation", fg="cyan", bold=True)
+    click.echo("=" * 40)
+    click.echo()
+    click.echo("1. Install: pip install scitex-template[mcp]")
+    click.echo("2. Config:  scitex-template mcp install --claude-code")
+    click.echo("3. Test:    scitex-template mcp doctor")
+
+
 if __name__ == "__main__":
     main()
