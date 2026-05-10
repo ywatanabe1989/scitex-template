@@ -38,6 +38,48 @@ pip install scitex-template[dev]         # pytest + coverage
 
 The umbrella route also works — `pip install scitex[template]` pulls this package transitively.
 
+## Demo
+
+```bash
+# Clone any of the 6 vendored templates into a fresh dir
+scitex-template clone scitex-pkg my-new-pkg     # minimal scitex-* package
+scitex-template clone research-project paper-2026
+scitex-template clone latex-manuscript thesis
+scitex-template clone singularity-container apptainer-rig
+
+# List available templates + code snippets
+scitex-template list-templates
+scitex-template list-snippets
+```
+
+```mermaid
+graph LR
+    Vendored["scitex_template/templates/<br/>(6 vendored template repos)"] --> Cloner["scitex-template clone"]
+    Snippets["scitex_template/snippets/<br/>(session, io, plt, ...)"] --> CLI["scitex-template list/get"]
+    Cloner --> Out1["fresh project dir"]
+    CLI --> Out2["copy-paste idioms"]
+```
+
+## Architecture
+
+```
+scitex_template/
+├── templates/                ← 6 vendored template repos (kept in sync)
+│   ├── scitex-pkg/           ← minimal scitex-* package skeleton
+│   ├── research-project/     ← @stx.session-driven analysis layout
+│   ├── cloud-module-plugin/  ← scitex-cloud plugin scaffold
+│   ├── pip-project/          ← bare-bones PyPI package
+│   ├── latex-manuscript/     ← scitex-writer-compatible paper
+│   └── singularity/          ← apptainer container recipe
+├── snippets/                 ← copy-paste idioms (session, io, plt, ...)
+├── _cli/                     ← `scitex-template clone` / list / get
+└── _mcp/                     ← MCP server exposing the same ops to agents
+```
+
+Each template ships as plain files; cloning is a recursive copy with
+optional `{name}` substitution, no Cookiecutter-style runtime
+templating engine. The MCP server re-exports the CLI surface 1:1.
+
 ## Quick Start
 
 ```bash
