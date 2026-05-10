@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <code>pip install scitex-template</code> · <code>pip install scitex[template]</code>
+  <code>uv pip install scitex-template[all]</code> · <code>pip install scitex[template]</code>
 </p>
 
 ---
