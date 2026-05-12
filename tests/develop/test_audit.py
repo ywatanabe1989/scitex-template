@@ -17,12 +17,4 @@ def test_audit_all_clean():
         )
     from scitex_dev.testing import audit_all_for_package
 
-    audit_all_for_package(
-        "scitex-template",
-        skip_rules=(
-            # README needs ## Demo + ## Architecture sections per the
-            # canonical template. Tracked alongside next docs refresh.
-            "PS-141",
-            "PS-142",
-        ),
-    )
+    audit_all_for_package("scitex-template")

@@ -19,17 +19,19 @@ except ImportError:  # pragma: no cover — only on ancient Pythons
 
 from pathlib import Path
 
-# scitex.git is an optional dep (install via `scitex-template[legacy]`) —
-# re-export when available, otherwise expose stubs that raise a clear
-# ImportError if called. Keeps the standalone install import-clean.
-try:
-    from scitex_git import (  # type: ignore[import-not-found]
-        create_child_git,
-        find_parent_git,
-        init_git_repo,
-        remove_child_git,
-    )
-except ImportError:  # pragma: no cover
+# scitex_git is an optional dep (install via `scitex-template[legacy]`,
+# alongside `pip install scitex`) — re-export when available, otherwise
+# expose stubs that raise a clear ImportError if called. Keeps the
+# standalone install import-clean.
+from scitex_dev import try_import_optional
+
+_scitex_git = try_import_optional("scitex_git", pkg="scitex-git")
+if _scitex_git is not None:  # pragma: no cover
+    create_child_git = _scitex_git.create_child_git
+    find_parent_git = _scitex_git.find_parent_git
+    init_git_repo = _scitex_git.init_git_repo
+    remove_child_git = _scitex_git.remove_child_git
+else:
 
     def _missing_scitex_git(name):
         def _stub(*_a, **_k):

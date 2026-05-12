@@ -37,6 +37,10 @@ dependencies = [
     "gitpython",
     "pyyaml",
     "scitex-config>=0.3.0",
+    # try_import_optional is the canonical optional-dep gate used by
+    # scitex_template/__init__.py, mcp_server.py, _utils/_git_strategy.py
+    # and _project/_clone_project.py. Light: scitex-config + tomli.
+    "scitex-dev>=0.11.0",
 ]
 
 # scitex.git / scitex.scholar / scitex.writer are still imported by a few
@@ -59,6 +63,10 @@ dev = [
     "pytest-asyncio>=0.21",
     "pytest-cov",
     "pytest>=7.0",
+    # tests/develop/test_audit.py: gates on shutil.which("scitex-dev")
+    # and imports scitex_dev.testing.audit_all_for_package — the
+    # [cli-audit] extra installs both the CLI shim and audit helpers.
+    "scitex-dev[cli-audit]>=0.11.0",
 ]
 docs = [
     "sphinx>=7.0",
@@ -87,6 +95,11 @@ Homepage = "https://github.com/ywatanabe1989/scitex-template"
 Documentation = "https://scitex-template.readthedocs.io"
 Repository = "https://github.com/ywatanabe1989/scitex-template"
 Issues = "https://github.com/ywatanabe1989/scitex-template/issues"
+
+[tool.coverage.run]
+parallel = true
+source = ["scitex_template"]
+concurrency = ["multiprocessing", "thread"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/scitex_template"]
