@@ -1,12 +1,17 @@
 # scitex-template
 
 <!-- scitex-badges:start -->
-[![PyPI](https://img.shields.io/pypi/v/scitex-template.svg)](https://pypi.org/project/scitex-template/)
-[![Python](https://img.shields.io/pypi/pyversions/scitex-template.svg)](https://pypi.org/project/scitex-template/)
-[![Tests](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml/badge.svg)](https://github.com/ywatanabe1989/scitex-template/actions/workflows/test.yml)
-[![Coverage](https://codecov.io/gh/ywatanabe1989/scitex-template/graph/badge.svg)](https://codecov.io/gh/ywatanabe1989/scitex-template)
-[![Docs](https://readthedocs.org/projects/scitex-template/badge/?version=latest)](https://scitex-template.readthedocs.io/en/latest/)
-[![License: AGPL v3](https://img.shields.io/badge/license-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+<p align="center">
+  <a href="https://pypi.org/project/scitex-template/"><img src="https://img.shields.io/pypi/v/scitex-template?label=pypi" alt="pypi"></a>
+  <a href="https://pypi.org/project/scitex-template/"><img src="https://img.shields.io/pypi/pyversions/scitex-template?label=python" alt="python"></a>
+  <a href="https://github.com/ywatanabe1989/scitex-template/actions/workflows/rtd-sphinx-build-on-ubuntu-latest.yml"><img src="https://img.shields.io/github/actions/workflow/status/ywatanabe1989/scitex-template/rtd-sphinx-build-on-ubuntu-latest.yml?branch=develop&label=docs" alt="docs"></a>
+</p>
+<p align="center">
+  <a href="https://github.com/ywatanabe1989/scitex-template/actions/workflows/pytest-matrix-on-ubuntu-py3-11-3-12-3-13.yml"><img src="https://img.shields.io/github/actions/workflow/status/ywatanabe1989/scitex-template/pytest-matrix-on-ubuntu-py3-11-3-12-3-13.yml?branch=develop&label=tests" alt="tests"></a>
+  <a href="https://github.com/ywatanabe1989/scitex-template/actions/workflows/scitex-dev-quality-audit-on-ubuntu-latest.yml"><img src="https://img.shields.io/github/actions/workflow/status/ywatanabe1989/scitex-template/scitex-dev-quality-audit-on-ubuntu-latest.yml?branch=develop&label=quality" alt="quality"></a>
+  <a href="https://codecov.io/gh/ywatanabe1989/scitex-template"><img src="https://img.shields.io/codecov/c/github/ywatanabe1989/scitex-template/develop?label=cov" alt="cov"></a>
+  <a href="https://www.gnu.org/licenses/agpl-3.0"><img src="https://img.shields.io/badge/license-AGPL_v3-blue.svg" alt="License: AGPL v3"></a>
+</p>
 <!-- scitex-badges:end -->
 
 <p align="center">
